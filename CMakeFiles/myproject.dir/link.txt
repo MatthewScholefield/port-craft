@@ -1,0 +1,1 @@
+/usr/bin/g++   -g3 -gdwarf-2   CMakeFiles/myproject.dir/main.cpp.o  -o myproject -rdynamic /usr/local/lib/libsfml-system.so /usr/local/lib/libsfml-window.so /usr/local/lib/libsfml-graphics.so /usr/local/lib/libsfml-network.so /usr/local/lib/libsfml-audio.so -Wl,-rpath,/usr/local/lib: 

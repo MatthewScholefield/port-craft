@@ -1,0 +1,2 @@
+#define port-craft_VERSION_MAJOR @port-craft_VERSION_MAJOR@
+#define port-craft_VERSION_MINOR @port-craft_VERSION_MINOR@
