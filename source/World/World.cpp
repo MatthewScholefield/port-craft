@@ -44,5 +44,5 @@ void World::updatePlayer()
 
 void World::updateCamera(float dT)
 {
-	camPos += (playerPos - camPos) * 6f * dT; // TODO: Remove magic number
+	camPos += (playerPos - camPos) * 6.f * dT; // TODO: Remove magic number
 }
