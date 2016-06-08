@@ -20,17 +20,20 @@
 
 // TODO: Change arbitrary value (This is to prevent seg faults from starting left of (0,0))
 
-World::World() : blocks(), playerPos(500, 500), camPos(500, 500) { }
+World::World() : blocks(), playerPos(500, 500), camPos(500, 500)
+{
+	generator.generate(*this);
+}
 
 void World::update(float dT)
 {
-	updatePlayer();
+	updatePlayer(dT);
 	updateCamera(dT);
 }
 
-void World::updatePlayer()
+void World::updatePlayer(float dT)
 {
-	const float VAL = 2.f;
+	float VAL = 600.f * dT;
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		playerPos.x -= VAL;
@@ -44,5 +47,5 @@ void World::updatePlayer()
 
 void World::updateCamera(float dT)
 {
-	camPos += (playerPos - camPos) * 6.f * dT; // TODO: Remove magic number
+	camPos += (playerPos - camPos) * 2.f * dT; // TODO: Remove magic number
 }

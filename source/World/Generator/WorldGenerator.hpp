@@ -17,12 +17,10 @@
 
 #pragma once
 
+class World;
+
 class WorldGenerator
 {
 public:
-	WorldGenerator();
-	WorldGenerator(const WorldGenerator& orig);
-	virtual ~WorldGenerator();
-private:
-
+	void generate(World &world);
 };

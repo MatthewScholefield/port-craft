@@ -20,6 +20,7 @@
 #include <SFML/System/Vector2.hpp>
 #include "Elements/Block.hpp"
 #include "../Backend/types.hpp"
+#include "Generator/WorldGenerator.hpp"
 
 class World
 {
@@ -38,12 +39,15 @@ private:
 	template <class T, unsigned I, unsigned J, unsigned K>
 	using Array3D = std::array<std::array<std::array<T, K>, J>, I>;
 
+	template <class T, unsigned I, unsigned J>
+	using Array2D = std::array<std::array<T, J>, I>;
+
 	//-- Functions --
 public:
 	World();
 	void update(float dT);
 private:
-	void updatePlayer();
+	void updatePlayer(float dT);
 	void updateCamera(float dT);
 
 	//-- Variables --
@@ -52,6 +56,8 @@ public:
 	static const int WIDTH = WORLD_WIDTH, HEIGHT = WORLD_HEIGHT;
 private:
 	Array3D<Block, NUM_LAYERS, WIDTH, HEIGHT> blocks;
+	Array2D<int, WIDTH, HEIGHT> brightness;
 	sf::Vector2f camPos;
 	sf::Vector2f playerPos;
+	WorldGenerator generator;
 };

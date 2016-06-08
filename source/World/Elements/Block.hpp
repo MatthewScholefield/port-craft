@@ -17,23 +17,22 @@
 
 #pragma once
 
-#include <cassert>
-
-#include <cstdlib>
-
 class Block
 {
+public:
+	explicit operator int() const;
+	Block &operator=(int val);
+	bool operator==(Block block);
+	bool operator!=(Block block);
+	Block();
+	Block(int id);
+
+	bool isWalkThrough();
+
 private:
 	int id;
 
 public:
-
-	explicit operator int() const;
-	Block &operator=(int val);
-	// TODO: change to AIR
-	Block();
-
-	Block(int id);
 
 	enum
 	{
@@ -42,8 +41,7 @@ public:
 		DIRT,
 		GRASS,
 		TORCH,
-		PUMPKIN_FACE_ON,
-		PUMPKIN_LIGHT,
+		LIGHT_PUMPKIN,
 		GLOWSTONE,
 		LOG_OAK,
 		LOG_SPRUCE,
@@ -58,70 +56,46 @@ public:
 		BEDROCK,
 		SNOW_TOP,
 		GRASS_SNOW,
-		SNOW_GRASS,
-		COAL_ORE,
 		ORE_COAL,
-		IRON_ORE,
 		ORE_IRON,
-		GOLD_ORE,
 		ORE_GOLD,
-		DIAMOND_ORE,
 		ORE_DIAMOND,
-		REDSTONE_ORE,
 		ORE_REDSTONE,
 		TNT,
 		SANDSTONE,
-		ROSE,
-		RED_FLOWER,
 		FLOWER_RED,
-		DANDELION,
-		YELLOW_FLOWER,
 		FLOWER_YELLOW,
-		IRON_BLOCK,
 		BLOCK_IRON,
-		GOLD_BLOCK,
 		BLOCK_GOLD,
-		DIAMOND_BLOCK,
 		BLOCK_DIAMOND,
-		BLACK_WOOL,
-		RED_WOOL,
-		GREEN_WOOL,
-		DARK_GREEN_WOOL,
-		BROWN_WOOL,
+		WOOL_BLACK,
+		WOOL_RED,
+		WOOL_GREEN_DARK,
+		WOOL_BROWN,
 		BlUE_WOOL,
-		PURPLE_WOOL,
-		CYAN_WOOL,
-		GRAY_WOOL,
-		WHITE_WOOL,
+		WOOL_PURPLE,
+		WOOL_CYAN,
+		WOOL_GRAY,
+		WOOL_WHITE,
 		DARK_GRAY_WOOL,
-		PINK_WOOL,
-		LIME_WOOL,
-		LIGHT_GREEN_WOOL,
-		YELLOW_WOOL,
+		WOOL_PINK,
+		WOOL_GREEN_LIGHT,
+		WOOL_YELLOW,
 		LIGHT_BLUE_WOOL,
-		MAGENTA_WOOL,
-		ORANGE_WOOL,
+		WOOL_MAGENTA,
+		WOOL_ORANGE,
 		LADDER,
 		LOG_JUNGLE,
 		GRASS_JUNGLE,
-		TALLGRASS,
 		TALL_GRASS,
-		DEADBUSH,
 		SHRUB,
-		RAW_PORKCHOP,
 		PORKCHOP_RAW,
-		RAW_BEEF,
 		BEEF_RAW,
 		LEATHER,
-		WOOD_PICKAXE,
 		PICKAXE_WOOD,
-		STONE_PICKAXE,
 		PICKAXE_STONE,
-		IRON_PICKAXE,
 		PICKAXE_IRON,
-		GOLD_PICKAXE,
 		PICKAXE_GOLD,
-		DIAMOND_PICKAXE,
 		PICKAXE_DIAMOND,
 		COAL,
 		INGOT_IRON,

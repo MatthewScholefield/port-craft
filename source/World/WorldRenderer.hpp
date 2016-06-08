@@ -37,7 +37,7 @@ class View;
 class WorldRenderer : public sf::Drawable
 {
 public:
-	WorldRenderer(const World &WORLD, const sf::Texture &TEXTURE, unsigned int tileSize = 16, int layers = 1);
+	WorldRenderer(World &world, const sf::Texture &TEXTURE, unsigned int tileSize = 16, int layers = 1);
 	~WorldRenderer(void);
 	float getTileSize() const;
 	int getLayers() const;
@@ -47,17 +47,18 @@ public:
 	void draw(sf::RenderTarget &rt, sf::RenderStates states) const;
 	void update(sf::RenderTarget &rt);
 	void update(sf::View &view);
+	void calculateBrightness();
 private:
 	int width;
 	int height;
 	const int TILE_SIZE;
 	const int LAYERS;
+	static const int SUB_AMOUNT[16];
 	std::vector<sf::Vertex> vertices;
 	sf::Vector2i offset;
 	const sf::Vector2u NUM_TILES;
 	const sf::Texture &TEXTURE;
-
-	const World &WORLD;
+	World &world;
 
 	void setSize(sf::Vector2f v);
 	void setCorner(sf::Vector2f v);
@@ -66,4 +67,6 @@ private:
 	void draw(int index, sf::FloatRect rec, sf::IntRect src, sf::Color color);
 	void refreshLocal(int left, int top, int right, int bottom);
 	bool isVisible(int x, int y);
+	void brightnessUpdate(int x, int y, int brightness);
+	void checkBlock(int x, int y);
 };

@@ -16,9 +16,13 @@
  */
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 #include "TextureManager.hpp"
 
-TextureManager::TextureManager() { }
+TextureManager::TextureManager(const sf::Vector2f &SIZE) : rectangle({})
+{
+	resize(SIZE);
+}
 
 TextureManager::TextureManager(const TextureManager& orig) { }
 
@@ -34,7 +38,33 @@ bool TextureManager::loadTexture()
 	return true;
 }
 
+void TextureManager::resize(const sf::Vector2f &SIZE)
+{
+	sf::Color skyColors[2] = {
+		{10, 30, 100},
+		{30, 110, 190}
+	};
+	std::array<sf::Vertex, 4> temp = {
+		{
+			{sf::Vector2f(0, 0), skyColors[0]},
+			{sf::Vector2f(SIZE.x, 0), skyColors[0]},
+			{sf::Vector2f(SIZE.x, SIZE.y), skyColors[1]},
+			{sf::Vector2f(0, SIZE.y), skyColors[1]}
+		}
+	};
+	rectangle = temp;
+}
+
 sf::Texture &TextureManager::getTexture()
 {
 	return texture;
+}
+
+void TextureManager::drawSky(sf::RenderWindow &window)
+{
+	std::array<sf::Vertex, 4> temp(rectangle);
+	const sf::Vector2i &pos = window.mapCoordsToPixel(sf::Vector2f(0, 0));
+	for (auto &i : temp)
+		i.position -= (sf::Vector2f)pos;
+	window.draw(temp.data(), 4, sf::Quads);
 }

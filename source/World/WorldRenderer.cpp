@@ -5,8 +5,8 @@
 #include <cassert>
 #include <iostream>
 
-WorldRenderer::WorldRenderer(const World &WORLD, const sf::Texture &TEXTURE, unsigned int tileSize, int layers)
-: WORLD(WORLD), TEXTURE(TEXTURE), TILE_SIZE(tileSize), LAYERS(layers), NUM_TILES(TEXTURE.getSize() / tileSize)
+WorldRenderer::WorldRenderer(World &world, const sf::Texture &TEXTURE, unsigned int tileSize, int layers)
+: world(world), TEXTURE(TEXTURE), TILE_SIZE(tileSize), LAYERS(layers), NUM_TILES(TEXTURE.getSize() / tileSize)
 {
 	assert(layers > 0);
 }
@@ -41,9 +41,6 @@ void WorldRenderer::refreshLocal(int left, int top, int right, int bottom)
 
 void WorldRenderer::setSize(sf::Vector2f v)
 {
-	v.x -= 3 * TILE_SIZE; // Verifies the rendered area is correct
-	v.y -= 3 * TILE_SIZE; // TODO: Remove debug
-
 	int w = static_cast<int> (v.x / TILE_SIZE) + 2;
 	int h = static_cast<int> (v.y / TILE_SIZE) + 2;
 	if (w == width && h == height) return;
@@ -62,8 +59,6 @@ void WorldRenderer::setSize(sf::Vector2f v)
 
 void WorldRenderer::setCorner(sf::Vector2f v)
 {
-	v.x += (float) TILE_SIZE; // Verifies the rendered area is correct
-	v.y += (float) TILE_SIZE; // TODO: Remove debug
 	auto tile = getTile(v);
 	auto dif = tile - offset;
 	if (dif.x == 0 && dif.y == 0)
@@ -163,8 +158,10 @@ void WorldRenderer::refresh(int x, int y)
 
 	for (int i = 0; i < LAYERS; i++)
 	{
-		sf::Color color(255, 255, 255, 255);
-		sf::Vector2u tile = getTile(WORLD.blocks[World::FG][x][y]);
+		int brightness = world.brightness[x][y];
+		int mag = (brightness * 255) / 15;
+		sf::Color color(mag, mag, mag);
+		sf::Vector2u tile = getTile(world.blocks[World::FG][x][y]);
 		sf::IntRect src(tile.x*TILE_SIZE, tile.y*TILE_SIZE, TILE_SIZE, TILE_SIZE);
 
 		// Provider(x, y, i, color, src);
@@ -195,6 +192,61 @@ void WorldRenderer::update(sf::RenderTarget &rt)
 
 void WorldRenderer::update(sf::View &view)
 {
-	view.setCenter(WORLD.camPos);
-	setCorner(WORLD.camPos);
+	view.setCenter(world.camPos);
+}
+
+const int WorldRenderer::SUB_AMOUNT[16] = {1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3};
+
+void WorldRenderer::brightnessUpdate(int x, int y, int brightness)
+{
+	if ((unsigned) x >= World::WIDTH || (unsigned) y >= World::HEIGHT)
+		return;
+	int before = world.brightness[x][y];
+	int after = std::max(before, brightness);
+	if (before != after)
+	{
+		world.brightness[x][y] = after;
+		int give = after - (world.blocks[World::FG][x][y].isWalkThrough() ? 1 : SUB_AMOUNT[after]);
+		brightnessUpdate(x + 1, y, give);
+		brightnessUpdate(x - 1, y, give);
+		brightnessUpdate(x, y + 1, give);
+		brightnessUpdate(x, y - 1, give);
+	}
+}
+
+void WorldRenderer::checkBlock(int x, int y)
+{
+	int brightness = world.brightness[x][y] - (world.blocks[World::FG][x][y].isWalkThrough() ? 1 : SUB_AMOUNT[world.brightness[x][y]]);
+	brightnessUpdate(x + 1, y, brightness);
+	brightnessUpdate(x - 1, y, brightness);
+	brightnessUpdate(x, y + 1, brightness);
+	brightnessUpdate(x, y - 1, brightness);
+}
+
+void WorldRenderer::calculateBrightness()
+{
+	// TODO: Update brightness in area
+	const int MAX_SPREAD = 0; // 7
+	int leftBound = 0;
+	int rightBound = world.WIDTH - 1;
+	int topBound = 0;
+	int bottomBound = world.HEIGHT - 1;
+
+	const int MIN_X = std::max(0, leftBound - MAX_SPREAD);
+	const int MAX_X = std::min(world.WIDTH - 1, rightBound + MAX_SPREAD);
+	const int MIN_Y = std::max(0, topBound - MAX_SPREAD);
+	const int MAX_Y = std::min(world.HEIGHT - 1, bottomBound + MAX_SPREAD);
+
+	for (int x = MIN_X; x <= MAX_X; ++x)
+	{
+		for (int y = MIN_Y + 1; y <= MAX_Y; ++y)
+		{
+			Block block = world.blocks[World::FG][x][y];
+			if (block == Block::AIR || world.blocks[World::FG][x][y - 1] == Block::AIR)
+				world.brightness[x][y] = 15;
+		}
+	}
+	for (int i = MIN_X; i <= MAX_X; ++i)
+		for (int j = MIN_Y; j <= MAX_Y; ++j)
+			checkBlock(i, j);
 }

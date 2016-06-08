@@ -15,11 +15,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <random>
+#include "../World.hpp"
 #include "WorldGenerator.hpp"
+#include "SimplexNoise.hpp"
+#include "State.hpp"
 
-WorldGenerator::WorldGenerator() { }
-
-WorldGenerator::WorldGenerator(const WorldGenerator& orig) { }
-
-WorldGenerator::~WorldGenerator() { }
-
+void WorldGenerator::generate(World &world)
+{
+	const float AIR_VAL = 0.f;
+	const int NUM_DIRT_LAYERS = 7;
+	int numDirt = 0; //0 == AIR
+	float frequency = 50.0f / (float) world.WIDTH;
+	State *state = State::air;
+	for (int x = 0; x < world.WIDTH; ++x)
+		for (int y = 0; y < world.HEIGHT; ++y)
+		{
+			float noise = SimplexNoise::noise((float) x*frequency, (float) y * frequency);
+			State *newState = state->update(noise);
+			if (newState != state)
+			{
+				state = newState;
+				state->enter();
+			}
+			world.blocks[World::FG][x][y] = state->getBlock();
+		}
+}

@@ -17,21 +17,28 @@
 
 #pragma once
 
+#include <SFML/System/Vector2.hpp>
+
 namespace sf
 {
 class Image;
 class Texture;
+class Vertex;
+class RenderWindow;
 }
 
 class TextureManager
 {
 public:
-	TextureManager();
+	TextureManager(const sf::Vector2f &SIZE);
 	TextureManager(const TextureManager& orig);
 	virtual ~TextureManager();
 	bool loadTexture();
 	sf::Texture &getTexture();
+	void resize(const sf::Vector2f &SIZE);
+	void drawSky(sf::RenderWindow &window);
 private:
+	std::array<sf::Vertex, 4> rectangle;
 	sf::Image image;
 	sf::Texture texture;
 };
