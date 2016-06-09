@@ -17,10 +17,11 @@
 
 #pragma once
 #include <array>
-#include <SFML/System/Vector2.hpp>
 #include "Elements/Block.hpp"
-#include "../Backend/types.hpp"
 #include "Generator/WorldGenerator.hpp"
+
+#include "Backend/Vector.hpp"
+#include "Backend/types.hpp"
 
 class World
 {
@@ -57,7 +58,7 @@ public:
 private:
 	Array3D<Block, NUM_LAYERS, WIDTH, HEIGHT> blocks;
 	Array2D<int, WIDTH, HEIGHT> brightness;
-	sf::Vector2f camPos;
-	sf::Vector2f playerPos;
+	Vector2f camPos;
+	Vector2f playerPos;
 	WorldGenerator generator;
 };
