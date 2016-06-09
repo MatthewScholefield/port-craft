@@ -1,6 +1,8 @@
 # About
 Port Craft is a 2D Minecraft-inspired game focused on portability and low resource consumption. Currently it should run on Windows, Mac, and Linux, however in the future a Nintendo DS version is planned.
 
+![Screenshot][screenshot]
+
 # Build instructions
 Here's an overview of what needs to be done:
  - Install SFML library and CMake
@@ -44,3 +46,4 @@ Contact me at [matthew3311999@gmail.com](mailto://matthew3311999@gmail.com) or f
 [sfml-windows]:http://www.sfml-dev.org/tutorials/2.3/#getting-started
 [cmake-windows]:https://cmake.org/download/
 [cmake-gui]:https://cmake.org/runningcmake/
+[screenshot]:https://raw.githubusercontent.com/Wolfgange3311999/Port-Craft/master/readme/Screenshot.png
