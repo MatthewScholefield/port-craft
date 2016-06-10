@@ -45,8 +45,9 @@ private:
 
 	//-- Functions --
 public:
-	World();
+	World(const Vector2f &GRAVITY);
 	void update(float dT);
+	const Vector2f &getGravity();
 private:
 	void updatePlayer(float dT);
 	void updateCamera(float dT);
@@ -61,4 +62,5 @@ private:
 	Vector2f camPos;
 	Vector2f playerPos;
 	WorldGenerator generator;
+	Vector2f GRAVITY;
 };

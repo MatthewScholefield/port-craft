@@ -19,3 +19,5 @@
 #include "Entities/Entity.hpp"
 
 BaseMob::BaseMob(const MobType MOB_TYPE) : Entity(EntityType::MOB), MOB_TYPE(MOB_TYPE) { }
+
+void BaseMob::updateEntity(float dt, World &world) { }

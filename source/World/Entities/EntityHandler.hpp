@@ -22,12 +22,15 @@
 
 #include "Entity.hpp"
 
-enum class EntityType;
+class World;
 
 class EntityHandler
 {
 public:
 	EntityHandler();
+	
+	void update(float dt, World &world);
+	void createPlayer();
 private:
 	std::array<std::vector<Entity*>, (int)EntityType::LENGTH> entityVectors;
 };

@@ -16,5 +16,13 @@
  */
 
 #include "Entity.hpp"
+#include "../World.hpp"
 
 Entity::Entity(const EntityType ENTITY_TYPE) : ENTITY_TYPE(ENTITY_TYPE), pos(), vel() { }
+
+void Entity::update(float dt, World& world)
+{
+	vel += world.getGravity() * dt;
+	pos += vel * dt;
+	updateEntity(dt, world);
+}

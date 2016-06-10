@@ -19,6 +19,8 @@
 
 #include "Backend/Vector.hpp"
 
+class World;
+
 enum class EntityType
 {
 	MOB = 0,
@@ -32,7 +34,10 @@ class Entity
 public:
 	Entity(const EntityType ENTITY_TYPE);
 	virtual ~Entity() = default;
+	
+	void update(float dt, World &world);
 protected:
+	virtual void updateEntity(float dt, World &world) = 0;
 	const EntityType ENTITY_TYPE;
 	Vector2f pos, vel;
 };

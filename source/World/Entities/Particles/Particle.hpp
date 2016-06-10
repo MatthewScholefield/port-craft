@@ -15,7 +15,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Particle.hpp"
-#include "Entity.hpp"
+#pragma once
 
-Particle::Particle(const ParticleType PARTICLE_TYPE) : Entity(EntityType::PARTICLE), PARTICLE_TYPE(PARTICLE_TYPE) { }
+#include "../Entity.hpp"
+
+class World;
+
+enum class ParticleType
+{
+};
+
+class Particle : public Entity
+{
+public:
+	Particle(const ParticleType PARTICLE_TYPE);
+	virtual ~Particle() = default;
+
+protected:
+
+	void updateEntity(float dt, World &world);
+
+	const ParticleType PARTICLE_TYPE;
+};

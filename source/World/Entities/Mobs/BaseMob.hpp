@@ -19,6 +19,8 @@
 
 #include "../Entity.hpp"
 
+class World;
+
 enum class MobType
 {
 };
@@ -28,7 +30,9 @@ class BaseMob : public Entity
 public:
 	BaseMob(const MobType MOB_TYPE);
 	virtual ~BaseMob() = default;
-
+	
 protected:
+	void updateEntity(float dt, World &world);
+	
 	const MobType MOB_TYPE;
 };
