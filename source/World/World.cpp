@@ -25,10 +25,10 @@ World::World(const Vector2f &GRAVITY) : blocks(), playerPos(500, 500), camPos(50
 	generator.generate(*this);
 }
 
-void World::update(float dT)
+void World::update(float dt)
 {
-	updatePlayer(dT);
-	updateCamera(dT);
+	updatePlayer(dt);
+	updateCamera(dt);
 }
 
 const Vector2f &World::getGravity()
@@ -36,9 +36,9 @@ const Vector2f &World::getGravity()
 	return GRAVITY;
 }
 
-void World::updatePlayer(float dT)
+void World::updatePlayer(float dt)
 {
-	float VAL = 600.f * dT;
+	float VAL = 600.f * dt;
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		playerPos.x -= VAL;
@@ -50,7 +50,7 @@ void World::updatePlayer(float dT)
 		playerPos.y += VAL;
 }
 
-void World::updateCamera(float dT)
+void World::updateCamera(float dt)
 {
-	camPos += (playerPos - camPos) * 2.f * dT; // TODO: Remove magic number
+	camPos += (playerPos - camPos) * 2.f * dt; // TODO: Remove magic number
 }
