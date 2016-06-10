@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "BaseMob.hpp"
-#include "Entities/Entity.hpp"
+#include "Particle.hpp"
+#include "Entity.hpp"
 
-BaseMob::BaseMob(const MobType MOB_TYPE) : Entity(EntityType::MOB), MOB_TYPE(MOB_TYPE) { }
+Particle::Particle(const ParticleType PARTICLE_TYPE) : Entity(EntityType::PARTICLE), PARTICLE_TYPE(PARTICLE_TYPE) { }

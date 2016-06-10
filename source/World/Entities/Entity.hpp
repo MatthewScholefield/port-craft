@@ -19,11 +19,20 @@
 
 #include "Backend/Vector.hpp"
 
+enum class EntityType
+{
+	MOB = 0,
+	PARTICLE,
+	
+	LENGTH
+};
+
 class Entity
 {
 public:
-	Entity();
-
+	Entity(const EntityType ENTITY_TYPE);
+	virtual ~Entity() = default;
 protected:
+	const EntityType ENTITY_TYPE;
 	Vector2f pos, vel;
 };

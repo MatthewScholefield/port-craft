@@ -15,7 +15,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "BaseMob.hpp"
-#include "Entities/Entity.hpp"
+#pragma once
 
-BaseMob::BaseMob(const MobType MOB_TYPE) : Entity(EntityType::MOB), MOB_TYPE(MOB_TYPE) { }
+#include "../Entity.hpp"
+
+enum class ParticleType
+{
+};
+
+class Particle : public Entity
+{
+public:
+	Particle(const ParticleType PARTICLE_TYPE);
+	virtual ~Particle() = default;
+	
+protected:
+	const ParticleType PARTICLE_TYPE;
+};

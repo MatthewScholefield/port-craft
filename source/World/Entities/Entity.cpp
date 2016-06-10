@@ -17,4 +17,4 @@
 
 #include "Entity.hpp"
 
-Entity::Entity() : pos(), vel() { }
+Entity::Entity(const EntityType ENTITY_TYPE) : ENTITY_TYPE(ENTITY_TYPE), pos(), vel() { }

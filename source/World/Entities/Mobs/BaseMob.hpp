@@ -17,15 +17,18 @@
 
 #pragma once
 
+#include "../Entity.hpp"
+
 enum class MobType
 {
 };
 
-class BaseMob : public BaseMob
+class BaseMob : public Entity
 {
 public:
-	BaseMob(const MobType TYPE);
+	BaseMob(const MobType MOB_TYPE);
+	virtual ~BaseMob() = default;
 
 protected:
-	const MobType TYPE;
+	const MobType MOB_TYPE;
 };
