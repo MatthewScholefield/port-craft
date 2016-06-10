@@ -3,7 +3,8 @@
 
 #include "World/WorldRenderer.hpp" // renderer
 #include "World/World.hpp"
-#include "TextureManager.hpp" // world
+#include "TextureManager.hpp"
+#include "EntityHandler.hpp" // world
 #include <memory>
 #include <iostream> // world
 
@@ -22,9 +23,12 @@ int main()
 	if (!textureManager.loadTexture())
 		return 1;
 
-	std::shared_ptr<World> world(new World());
+	std::shared_ptr<World> world(new World(Vector2f(0.f, 5.f)));
 	WorldRenderer renderer(*world, textureManager.getTexture()); // TODO: Handle exception
 	renderer.calculateBrightness();
+	
+	EntityHandler entityHandler;
+	entityHandler.createPlayer();
 
 	while (window.isOpen())
 	{
@@ -49,6 +53,7 @@ int main()
 
 		renderer.update(view);
 		renderer.update(window);
+		entityHandler.update(dt, *world);
 
 		window.clear(); //Render block
 		{

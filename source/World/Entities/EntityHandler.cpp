@@ -16,7 +16,7 @@
  */
 
 #include "EntityHandler.hpp"
-#include "BaseMob.hpp"
+#include "Mob.hpp"
 
 EntityHandler::EntityHandler() : entityVectors() { }
 
@@ -29,5 +29,5 @@ void EntityHandler::update(float dt, World& world)
 
 void EntityHandler::createPlayer()
 {
-	entityVectors[(int)EntityType::MOB].emplace_back(new BaseMob((MobType)0));
+	entityVectors[(int)EntityType::MOB].emplace_back(new Mob((MobType)0));
 }

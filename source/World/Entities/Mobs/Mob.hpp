@@ -15,9 +15,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "BaseMob.hpp"
-#include "Entities/Entity.hpp"
+#pragma once
 
-BaseMob::BaseMob(const MobType MOB_TYPE) : Entity(EntityType::MOB), MOB_TYPE(MOB_TYPE) { }
+#include "../Entity.hpp"
 
-void BaseMob::updateEntity(float dt, World &world) { }
+class World;
+
+enum class MobType
+{
+};
+
+class Mob : public Entity
+{
+public:
+	Mob(const MobType MOB_TYPE);
+	virtual ~Mob() = default;
+	
+protected:
+	void updateEntity(float dt, World &world);
+	
+	const MobType MOB_TYPE;
+};
