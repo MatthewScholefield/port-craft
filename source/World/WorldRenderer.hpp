@@ -17,6 +17,8 @@
 
 #pragma once
 
+#include <vector>
+
 #include <SFML/Graphics/Vertex.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Drawable.hpp>
