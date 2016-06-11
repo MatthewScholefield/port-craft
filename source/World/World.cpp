@@ -15,7 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <SFML/Window.hpp>
+#include "Backend/Input.hpp"
+
 #include "World.hpp"
 
 // TODO: Change arbitrary value (This is to prevent seg faults from starting left of (0,0))
@@ -40,13 +41,13 @@ void World::updatePlayer(float dt)
 {
 	float VAL = 600.f * dt;
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	if (isKeyPressed(Keys::Left))
 		playerPos.x -= VAL;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	if (isKeyPressed(Keys::Right))
 		playerPos.x += VAL;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	if (isKeyPressed(Keys::Up))
 		playerPos.y -= VAL;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	if (isKeyPressed(Keys::Down))
 		playerPos.y += VAL;
 }
 
