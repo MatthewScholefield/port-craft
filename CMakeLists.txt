@@ -63,8 +63,12 @@ set(EXECUTABLE_NAME "Port-Craft")
 #file(GLOB_RECURSE Sources "source/*/*.cpp")
 #file(GLOB_RECURSE Sources "source/*")
 
-file(GLOB_RECURSE Foo_SOURCES "source/*.cpp")
-file(GLOB_RECURSE Foo_HEADERS "source/*.hpp")
+include_directories("source/")
+include_directories("source-SFML/")
+
+file(GLOB_RECURSE Foo_SOURCES "source/*.cpp" "source-SFML/*.cpp")
+file(GLOB_RECURSE Foo_HEADERS "source/*.hpp" "source-SFML/*.cpp")
+
 set (Foo_INCLUDE_DIRS "")
 foreach (_headerFile ${Foo_HEADERS})
     get_filename_component(_dir ${_headerFile} PATH)
