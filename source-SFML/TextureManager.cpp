@@ -30,7 +30,7 @@ TextureManager::~TextureManager() { }
 
 bool TextureManager::loadTexture()
 {
-	if (!image.loadFromFile("texture.png"))
+	if (!image.loadFromFile("gfx/texture.png"))
 		return false;
 	image.createMaskFromColor(sf::Color(255, 0, 255));
 	texture.loadFromImage(image);
