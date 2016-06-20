@@ -2,7 +2,9 @@
 #include <stdio.h>
 
 #include "blocks.h"
+
 #include "DSGraphics.hpp"
+#include "WorldRenderer.hpp"
 
 
 int topNums[] = {4,18,27,28,48};
@@ -23,6 +25,11 @@ DSGraphics& DSGraphics::instance()
 	return instance;
 }
 
+DSGraphics::WorldRenderer& DSGraphics::renderer()
+{
+	static WorldRenderer instance;
+	return instance;
+}
 
 void DSGraphics::init()
 {
@@ -35,16 +42,18 @@ void DSGraphics::init()
 	iprintf("Initialized the vram!\n");
 	
 	// Setup the main backgrounds
-	videoSetMode(MODE_0_3D);
-	
-	m_bg2 = bgInit(2, BgType_Text8bpp, BgSize_T_512x256, 16, 0);
-	m_bg3 = bgInit(3, BgType_Text8bpp, BgSize_T_512x256, 18, 0);
+	videoSetMode(MODE_5_3D);
+	m_bg2 = bgInit(2, BgType_ExRotation, BgSize_ER_512x512, 4, 4);
+	m_bg3 = bgInit(3, BgType_ExRotation, BgSize_ER_512x512, 0, 4);
 	
 	iprintf("Initialized the backgrounds!\n");
 	
 	// Copy the graphics into memory
 	dmaCopy(blocksTiles, bgGetGfxPtr(m_bg2), sizeof(blocksTiles));
 	dmaCopy(blocksPal, BG_PALETTE, sizeof(blocksPal));
+	
+	// Set the background to be sky blue
+	BG_PALETTE[0] = 0x7660;
 	
 	iprintf("Initialized the graphics!\n");
 	

@@ -1,9 +1,10 @@
 #include <nds.h>
 #include <stdio.h>
+
 #include "DSGraphics.hpp"
+#include "WorldRenderer.hpp"
 
 #include "Backend/Vector.hpp"
-
 #include "World/World.hpp"
 
 int main()
@@ -15,18 +16,15 @@ int main()
 	consoleDemoInit();
 	iprintf("Initialized the console!\n");
 	
-
-	DSGraphics::instance().init();
+	// Get a reference to the graphics module
+	DSGraphics& dsg = DSGraphics::instance();
+	// Ensure that the graphics module is initialized
+	dsg.init();
 	
-	for (int i = 0; i < 120; ++i)
-		swiWaitForVBlank();
-	
-	iprintf("Generating a world for the lolz!\n");
-	
-	for (int i = 0; i < 10; ++i)
-		swiWaitForVBlank();
-	BG_PALETTE[0] = 0x7660;
+	iprintf("Generating a world\n");
 	World * w = new World(Vector2f(0.0f,18.0f));
+	iprintf("Done!\n");
+	
 	Vector2i cam_pos(0,0);
 	while(1)
 	{
@@ -40,7 +38,8 @@ int main()
 		if (keysHeld() & KEY_RIGHT)
 			cam_pos.x += 1;
 		
-		DSGraphics::instance().setScroll(cam_pos);
+		dsg.renderer().render(*w,cam_pos);
+		
 		
 		swiWaitForVBlank();
 	}
