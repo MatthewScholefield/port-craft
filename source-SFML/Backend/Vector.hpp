@@ -19,9 +19,6 @@
 
 #include <SFML/System/Vector2.hpp>
 
-template<typename T>
-using Vector2 = sf::Vector2<T>;
-
-using Vector2i = Vector2<int>;
-using Vector2u = Vector2<unsigned int>;
-using Vector2f = Vector2<float>;
+using Vector2i = sf::Vector2<int>;
+using Vector2u = sf::Vector2<unsigned int>;
+using Vector2f = sf::Vector2<float>;

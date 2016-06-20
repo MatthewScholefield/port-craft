@@ -1,7 +1,9 @@
 #include <nds.h>
 #include <stdio.h>
 
-#include "texture.h"
+#include "Backend/Vector.hpp"
+
+#include "blocks.h"
 
 int topNums[] = {4,18,27,28,48};
 int bottomNums[] = {1,2,3};
@@ -23,8 +25,8 @@ int main()
 	iprintf("Initialized the backgrounds!\n");
 	
 	// Copy the graphics into memory
-	dmaCopy(textureTiles, bgGetGfxPtr(bg2), sizeof(textureTiles));
-	dmaCopy(texturePal, BG_PALETTE, sizeof(texturePal));
+	dmaCopy(blocksTiles, bgGetGfxPtr(bg2), sizeof(blocksTiles));
+	dmaCopy(blocksPal, BG_PALETTE, sizeof(blocksPal));
 	iprintf("Initialized the graphics!\n");
 	
 	// Create a default map
@@ -48,6 +50,23 @@ int main()
 
 	iprintf("Initialized the maps!\n");
 	
-	while(1);
+	Vector2i cam_pos(0,0);
+	while(1)
+	{
+		scanKeys();
+		if (keysHeld() & KEY_UP)
+			cam_pos.y -= 1;
+		if (keysHeld() & KEY_DOWN)
+			cam_pos.y += 1;
+		if (keysHeld() & KEY_LEFT)
+			cam_pos.x -= 1;
+		if (keysHeld() & KEY_RIGHT)
+			cam_pos.x += 1;
+		
+		bgSetScroll(bg2,cam_pos.x,cam_pos.y);
+		bgSetScroll(bg3,cam_pos.x,cam_pos.y);
+		bgUpdate();
+		swiWaitForVBlank();
+	}
 	
 }
