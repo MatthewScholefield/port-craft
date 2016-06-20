@@ -32,3 +32,8 @@ void Entity::update(float dt, World& world)
 	pos += vel * dt;
 	updateEntity(dt, world);
 }
+
+const Vector2f &Entity::getPos() const
+{
+	return pos;
+}

@@ -40,6 +40,7 @@ public:
 	
 	void update(float dt, World &world);
 	virtual void draw(RenderWindow &window) = 0;
+	const Vector2f &getPos() const;
 protected:
 	virtual void updateEntity(float dt, World &world) = 0;
 	const EntityType ENTITY_TYPE;

@@ -24,6 +24,8 @@
 #include "Backend/types.hpp"
 #include "Entities/EntityHandler.hpp"
 
+class Player;
+
 class World
 {
 	friend class WorldGenerator;
@@ -47,11 +49,10 @@ private:
 	//-- Functions --
 public:
 	World(const Vector2f &GRAVITY);
-	void update(float dT);
+	void update(float dT, const Player &player);
 	const Vector2f &getGravity();
 private:
-	void updatePlayer(float dT);
-	void updateCamera(float dT);
+	void updateCamera(float dT, const Vector2f &pos);
 
 	//-- Variables --
 public:
@@ -61,7 +62,6 @@ private:
 	Array3D<Block, NUM_LAYERS, WIDTH, HEIGHT> blocks;
 	Array2D<int, WIDTH, HEIGHT> brightness;
 	Vector2f camPos;
-	Vector2f playerPos;
 	WorldGenerator generator;
 	Vector2f GRAVITY;
 };

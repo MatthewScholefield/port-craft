@@ -25,6 +25,7 @@
 #include "Backend/Graphics/RenderWindow.hpp"
 
 class World;
+class Player;
 
 class EntityHandler
 {
@@ -33,7 +34,7 @@ public:
 	
 	void update(float dt, World &world);
 	void draw(RenderWindow &window, World &world);
-	void createPlayer();
+	const Player &createPlayer();
 private:
 	std::array<std::vector<Entity*>, (int)EntityType::LENGTH> entityVectors;
 };

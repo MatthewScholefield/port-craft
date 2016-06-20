@@ -49,6 +49,6 @@ void Mob::draw(RenderWindow &window)
 void Mob::updateEntity(float dt, World &world)
 {
 	sprite.update(sf::seconds(dt));
-	sprite.setPaused(false);
-	//sprite.setPaused(std::abs(vel.x) < EPSILON);
+	sprite.setPaused(std::abs(vel.x) < EPSILON);
+	updateMob(dt, world);
 }

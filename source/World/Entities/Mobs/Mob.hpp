@@ -49,6 +49,7 @@ public:
 	
 protected:
 	void updateEntity(float dt, World &world) override;
+	virtual void updateMob(float dt, World &world) = 0;
 	
 	const MobType MOB_TYPE;
 	AnimatedMobSprite sprite;

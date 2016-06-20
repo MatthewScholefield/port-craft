@@ -18,6 +18,7 @@
 #include "Player.hpp"
 
 #include "Backend/Vector.hpp"
+#include "Backend/Input.hpp"
 
 MobSpriteData Player::spriteData(Vector2u(0, 0), Vector2u(16, 32));
 
@@ -26,4 +27,19 @@ Player::Player(const Vector2f &pos) : Mob(MobType::PLAYER, spriteData, pos) { }
 const MobSpriteData& Player::getSpriteData()
 {
 	return spriteData;
+}
+
+void Player::updateMob(float dt, World& world)
+{
+	float WALK_SPEED = 100.f;
+	
+	vel.x = 0;
+	if (isKeyPressed(Keys::Left))
+		vel.x = -WALK_SPEED;
+	if (isKeyPressed(Keys::Right))
+		vel.x = +WALK_SPEED;
+	if (isKeyPressed(Keys::Up))
+		vel.y = -WALK_SPEED;
+	if (isKeyPressed(Keys::Down) && vel.y < WALK_SPEED)
+		vel.y = +WALK_SPEED;
 }

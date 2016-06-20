@@ -21,12 +21,16 @@
 
 #include "Backend/Vector.hpp"
 
+class World;
+
 class Player : public Mob
 {
 public:
 	Player(const Vector2f &pos);
-	
 	const MobSpriteData& getSpriteData() override;
+	
+protected:
+	void updateMob(float dt, World &world) override;
 	
 private:
 	static MobSpriteData spriteData;

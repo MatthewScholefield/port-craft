@@ -31,7 +31,7 @@ int main()
 	renderer.calculateBrightness();
 	
 	EntityHandler entityHandler;
-	entityHandler.createPlayer();
+	const Player &player = entityHandler.createPlayer();
 
 	while (window.isOpen())
 	{
@@ -52,7 +52,7 @@ int main()
 		}
 
 		window.setView(view);
-		world->update(dt);
+		world->update(dt, player);
 
 		renderer.update(view);
 		renderer.update(window);
