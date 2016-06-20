@@ -17,23 +17,6 @@
 
 #pragma once
 
-#include <vector>
-#include <array>
+#include <SFML/Graphics/RenderWindow.hpp>
 
-#include "Entity.hpp"
-
-#include "Backend/Graphics/RenderWindow.hpp"
-
-class World;
-
-class EntityHandler
-{
-public:
-	EntityHandler();
-	
-	void update(float dt, World &world);
-	void draw(RenderWindow &window, World &world);
-	void createPlayer();
-private:
-	std::array<std::vector<Entity*>, (int)EntityType::LENGTH> entityVectors;
-};
+using RenderWindow = sf::RenderWindow;

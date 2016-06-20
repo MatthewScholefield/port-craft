@@ -15,25 +15,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
-#include <vector>
 #include <array>
 
-#include "Entity.hpp"
+#include "MobGraphics.hpp"
 
-#include "Backend/Graphics/RenderWindow.hpp"
+const std::array<Vector2u, (int)MobType::LENGTH> MobGraphics::SIZE = {
+	{},
+};
 
-class World;
-
-class EntityHandler
-{
-public:
-	EntityHandler();
+const std::array<Vector2u, (int)MobType::LENGTH> MobGraphics::START_POS = {
 	
-	void update(float dt, World &world);
-	void draw(RenderWindow &window, World &world);
-	void createPlayer();
-private:
-	std::array<std::vector<Entity*>, (int)EntityType::LENGTH> entityVectors;
+};
+
+const std::array<int, (int)MobType::LENGTH> MobGraphics::NUM_ANIM_FRAMES = {
+	
 };

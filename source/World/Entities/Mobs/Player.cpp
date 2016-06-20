@@ -15,25 +15,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include "Player.hpp"
 
-#include <vector>
-#include <array>
+#include "Backend/Vector.hpp"
 
-#include "Entity.hpp"
+MobSpriteData Player::spriteData(Vector2u(0, 0), Vector2u(16, 32));
 
-#include "Backend/Graphics/RenderWindow.hpp"
+Player::Player(const Vector2f &pos) : Mob(MobType::PLAYER, spriteData, pos) { }
 
-class World;
-
-class EntityHandler
+const MobSpriteData& Player::getSpriteData()
 {
-public:
-	EntityHandler();
-	
-	void update(float dt, World &world);
-	void draw(RenderWindow &window, World &world);
-	void createPlayer();
-private:
-	std::array<std::vector<Entity*>, (int)EntityType::LENGTH> entityVectors;
-};
+	return spriteData;
+}

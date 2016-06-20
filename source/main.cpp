@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 
+#include "World/Entities/Entity.hpp"
 #include "World/WorldRenderer.hpp" // renderer
 #include "World/World.hpp"
 #include "TextureManager.hpp"
@@ -10,6 +11,8 @@
 
 int main()
 {
+	Entity::init();
+	
 	sf::RenderWindow window(sf::VideoMode(640, 480), "Port Craft", sf::Style::Default);
 	window.setFramerateLimit(60); //TODO: Create option for vsync (for me it causes excessive screen tearing)
 	sf::View view(window.getDefaultView());
@@ -23,7 +26,7 @@ int main()
 	if (!textureManager.loadTexture())
 		return 1;
 
-	std::shared_ptr<World> world(new World(Vector2f(0.f, 5.f)));
+	std::shared_ptr<World> world(new World(Vector2f(0.f, 18.f)));
 	WorldRenderer renderer(*world, textureManager.getTexture()); // TODO: Handle exception
 	renderer.calculateBrightness();
 	
@@ -59,6 +62,7 @@ int main()
 		{
 			textureManager.drawSky(window);
 			window.draw(renderer);
+			entityHandler.draw(window, *world);
 		}
 		window.display();
 	}

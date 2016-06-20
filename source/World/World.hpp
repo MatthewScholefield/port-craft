@@ -22,6 +22,7 @@
 
 #include "Backend/Vector.hpp"
 #include "Backend/types.hpp"
+#include "Entities/EntityHandler.hpp"
 
 class World
 {

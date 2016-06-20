@@ -17,8 +17,14 @@
 
 #include "Entity.hpp"
 #include "../World.hpp"
+#include "Mobs/Player.hpp"
 
-Entity::Entity(const EntityType ENTITY_TYPE) : ENTITY_TYPE(ENTITY_TYPE), pos(), vel() { }
+void Entity::init()
+{
+	Player::init();
+}
+
+Entity::Entity(const EntityType ENTITY_TYPE, const Vector2f &pos) : ENTITY_TYPE(ENTITY_TYPE), pos(pos), vel() { }
 
 void Entity::update(float dt, World& world)
 {

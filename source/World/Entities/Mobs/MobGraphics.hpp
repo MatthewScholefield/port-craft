@@ -17,23 +17,20 @@
 
 #pragma once
 
-#include <vector>
 #include <array>
 
-#include "Entity.hpp"
+#include "Mob.hpp"
 
-#include "Backend/Graphics/RenderWindow.hpp"
+#include "Backend/Vector.hpp"
 
-class World;
-
-class EntityHandler
+class MobGraphics
 {
 public:
-	EntityHandler();
+	static const Vector2u getSize(MobType type);
+	static const Vector2u getStartPos(MobType type);
+	static const int getNumAnimFrames(MobType type);
 	
-	void update(float dt, World &world);
-	void draw(RenderWindow &window, World &world);
-	void createPlayer();
 private:
-	std::array<std::vector<Entity*>, (int)EntityType::LENGTH> entityVectors;
+	static const std::array<Vector2u, (int)MobType::LENGTH> SIZE, START_POS;
+	static const std::array<int, (int)MobType::LENGTH> NUM_ANIM_FRAMES;
 };

@@ -17,7 +17,7 @@
 
 #pragma once
 
-#include "../World/World.hpp"
-
 #define WORLD_WIDTH 2048
 #define WORLD_HEIGHT 512
+
+#define EPSILON 0.001f

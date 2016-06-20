@@ -17,23 +17,34 @@
 
 #pragma once
 
-#include <vector>
 #include <array>
 
-#include "Entity.hpp"
+#include "World/Entities/Mobs/MobSpriteState.hpp"
+#include "AnimatedSpritePlayer.hpp"
+#include "../Vector.hpp"
 
-#include "Backend/Graphics/RenderWindow.hpp"
+class MobSpriteData;
+class Animation;
+namespace sf
+{
+class Time;
+class Texture;
+class RenderWindow;
+}
 
-class World;
-
-class EntityHandler
+class AnimatedMobSprite
 {
 public:
-	EntityHandler();
+	AnimatedMobSprite(const MobSpriteData &data, const sf::Texture &texture);
 	
-	void update(float dt, World &world);
-	void draw(RenderWindow &window, World &world);
-	void createPlayer();
+	void setPaused(bool isPaused);
+	void setPosition(float x, float y);
+	void setPosition(Vector2f pos);
+	void update(sf::Time dt);
+	void draw(MobSpriteState state, sf::RenderWindow &window);
+	
 private:
-	std::array<std::vector<Entity*>, (int)EntityType::LENGTH> entityVectors;
+	MobSpriteState prevState;
+	std::array<Animation, (int)MobSpriteState::LENGTH> animations;
+	AnimatedSpritePlayer spritePlayer;
 };

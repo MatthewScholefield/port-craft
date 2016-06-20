@@ -21,7 +21,9 @@
 
 // TODO: Change arbitrary value (This is to prevent seg faults from starting left of (0,0))
 
-World::World(const Vector2f &GRAVITY) : blocks(), playerPos(500, 500), camPos(500, 500), GRAVITY(GRAVITY)
+World::World(const Vector2f &GRAVITY) :
+blocks(), brightness(), camPos(500, 500), playerPos(500, 500), generator(),
+GRAVITY(GRAVITY)
 {
 	generator.generate(*this);
 }
