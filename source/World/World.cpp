@@ -15,10 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Backend/Input.hpp"
-
 #include "World.hpp"
-#include "Entities/Mobs/Player.hpp"
+
+//#include "Entities/Mobs/Player.hpp"
 
 // TODO: Change arbitrary value (This is to prevent seg faults from starting left of (0,0))
 
@@ -29,10 +28,10 @@ GRAVITY(GRAVITY)
 	generator.generate(*this);
 }
 
-void World::update(float dt, const Player &player)
+/*void World::update(float dt, const Player &player)
 {
 	updateCamera(dt, player.getPixPos());
-}
+}*/
 
 const Vector2f &World::getGravity()
 {

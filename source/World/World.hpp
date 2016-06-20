@@ -22,7 +22,6 @@
 
 #include "Backend/Vector.hpp"
 #include "Backend/types.hpp"
-#include "Entities/EntityHandler.hpp"
 
 class Player;
 
@@ -49,9 +48,9 @@ private:
 	//-- Functions --
 public:
 	World(const Vector2f &GRAVITY);
-	void update(float dT, const Player &player);
+	//void update(float dT, const Player &player); TODO: Implement player on DS, and uncomment this
 	const Vector2f &getGravity();
-private:
+//private: TODO: Implement player on DS, and uncomment this
 	void updateCamera(float dT, const Vector2f &pos);
 
 	//-- Variables --

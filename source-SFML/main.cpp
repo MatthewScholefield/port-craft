@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 
+#include "World/Entities/Mobs/Player.hpp"
 #include "World/Entities/Entity.hpp"
 #include "World/WorldRenderer.hpp" // renderer
 #include "World/World.hpp"
@@ -52,8 +53,9 @@ int main()
 		}
 
 		window.setView(view);
-		world->update(dt, player);
-
+		//world->update(dt, player);
+		world->updateCamera(dt,player.getPixPos());
+		
 		renderer.update(view);
 		renderer.update(window);
 		entityHandler.update(dt, *world);
