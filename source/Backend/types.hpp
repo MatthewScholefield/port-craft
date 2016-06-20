@@ -17,7 +17,7 @@
 
 #pragma once
 
-#define WORLD_WIDTH 2048
-#define WORLD_HEIGHT 512
+#define WORLD_WIDTH 512
+#define WORLD_HEIGHT 128
 
 #define EPSILON 0.001f

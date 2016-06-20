@@ -3,6 +3,8 @@
 
 #include "Backend/Vector.hpp"
 
+#include "World/World.hpp"
+
 #include "blocks.h"
 
 int topNums[] = {4,18,27,28,48};
@@ -12,6 +14,7 @@ int main()
 {
 	// Initialize the sub screen for printing
 	consoleDemoInit();
+	defaultExceptionHandler();
 	iprintf("Initialized the console!\n");
 	
 	// Setup the VRAM Banks
@@ -19,7 +22,7 @@ int main()
 	iprintf("Initialized the vram!\n");
 	
 	// Setup the main backgrounds
-	videoSetMode(MODE_0_2D);
+	videoSetMode(MODE_0_3D);
 	int bg2 = bgInit(2, BgType_Text8bpp, BgSize_T_512x256, 16, 0);
 	int bg3 = bgInit(3, BgType_Text8bpp, BgSize_T_512x256, 18, 0);
 	iprintf("Initialized the backgrounds!\n");
@@ -50,6 +53,15 @@ int main()
 
 	iprintf("Initialized the maps!\n");
 	
+	for (int i = 0; i < 120; ++i)
+		swiWaitForVBlank();
+	
+	iprintf("Generating a world for the lolz!\n");
+	
+	for (int i = 0; i < 10; ++i)
+		swiWaitForVBlank();
+	BG_PALETTE[0] = 0x7660;
+	World * w = new World(Vector2f(0.0f,18.0f));
 	Vector2i cam_pos(0,0);
 	while(1)
 	{
