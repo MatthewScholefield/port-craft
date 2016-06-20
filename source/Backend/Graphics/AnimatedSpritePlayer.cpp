@@ -151,8 +151,6 @@ void AnimatedSpritePlayer::update(sf::Time deltaTime)
 	{
 		// add delta time
 		currentTime += deltaTime;
-		std::cout << "Here " << currentTime.asSeconds() << std::endl;
-		std::cout << "dt:" << deltaTime.asSeconds() << " frame:" << frameTime.asSeconds() << std::endl;
 
 		// if current time is bigger then the frame time advance one frame
 		if (currentTime >= frameTime)
