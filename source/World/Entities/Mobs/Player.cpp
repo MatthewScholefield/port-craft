@@ -31,15 +31,16 @@ const MobSpriteData& Player::getSpriteData()
 
 void Player::updateMob(float dt, World& world)
 {
-	float WALK_SPEED = 100.f;
-	
+	const float RUN_VEL = 3.f;
+	const float JUMP_VEL = 6.f;
+
 	vel.x = 0;
 	if (isKeyPressed(Keys::Left))
-		vel.x = -WALK_SPEED;
+		vel.x = -RUN_VEL;
 	if (isKeyPressed(Keys::Right))
-		vel.x = +WALK_SPEED;
+		vel.x = +RUN_VEL;
 	if (isKeyPressed(Keys::Up))
-		vel.y = -WALK_SPEED;
-	if (isKeyPressed(Keys::Down) && vel.y < WALK_SPEED)
-		vel.y = +WALK_SPEED;
+		vel.y = -JUMP_VEL;
+	if (isKeyPressed(Keys::Down) && vel.y < RUN_VEL)
+		vel.y = +JUMP_VEL;
 }

@@ -42,7 +42,7 @@ sprite(data, texture), spriteState(MobSpriteState::NORMAL) { }
 
 void Mob::draw(RenderWindow &window)
 {
-	sprite.setPosition(pos);
+	sprite.setPosition(getPixPos());
 	sprite.draw(spriteState, window);
 }
 

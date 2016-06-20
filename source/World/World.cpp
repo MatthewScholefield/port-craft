@@ -31,7 +31,7 @@ GRAVITY(GRAVITY)
 
 void World::update(float dt, const Player &player)
 {
-	updateCamera(dt, player.getPos());
+	updateCamera(dt, player.getPixPos());
 }
 
 const Vector2f &World::getGravity()

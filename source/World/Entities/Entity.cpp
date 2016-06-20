@@ -25,7 +25,7 @@ void Entity::init()
 }
 
 Entity::Entity(const EntityType ENTITY_TYPE, const Vector2f &pos) : ENTITY_TYPE(ENTITY_TYPE), pos(pos), vel() { }
-
+// 0 block/s -> 1 block/s in 1 s == 0 
 void Entity::update(float dt, World& world)
 {
 	vel += world.getGravity() * dt;
@@ -36,4 +36,10 @@ void Entity::update(float dt, World& world)
 const Vector2f &Entity::getPos() const
 {
 	return pos;
+}
+
+const Vector2f Entity::getPixPos() const
+{
+	const float BLOCK_PX = 16.f;
+	return pos * BLOCK_PX;
 }
