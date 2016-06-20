@@ -45,6 +45,8 @@ void DSGraphics::init()
 	videoSetMode(MODE_5_3D);
 	m_bg2 = bgInit(2, BgType_ExRotation, BgSize_ER_512x512, 4, 4);
 	m_bg3 = bgInit(3, BgType_ExRotation, BgSize_ER_512x512, 0, 4);
+	bgWrapOn(2);
+	bgWrapOn(3);
 	
 	iprintf("Initialized the backgrounds!\n");
 	

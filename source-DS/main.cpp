@@ -30,13 +30,13 @@ int main()
 	{
 		scanKeys();
 		if (keysHeld() & KEY_UP)
-			cam_pos.y -= 1;
+			cam_pos.y -= 4;
 		if (keysHeld() & KEY_DOWN)
-			cam_pos.y += 1;
+			cam_pos.y += 4;
 		if (keysHeld() & KEY_LEFT)
-			cam_pos.x -= 1;
+			cam_pos.x -= 4;
 		if (keysHeld() & KEY_RIGHT)
-			cam_pos.x += 1;
+			cam_pos.x += 4;
 		
 		dsg.renderer().render(*w,cam_pos);
 		

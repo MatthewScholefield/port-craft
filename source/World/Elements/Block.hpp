@@ -26,14 +26,12 @@ public:
 	bool operator!=(Block block);
 	Block();
 	Block(int id);
-
+	
 	bool isWalkThrough();
-
+	
 private:
 	int id;
-
 public:
-
 	enum
 	{
 		AIR = 0,

@@ -57,9 +57,9 @@ public:
 public:
 	static const int NUM_LAYERS = 2;
 	static const int WIDTH = WORLD_WIDTH, HEIGHT = WORLD_HEIGHT;
-private:
 	Array3D<Block, NUM_LAYERS, WIDTH, HEIGHT> blocks;
 	Array2D<int, WIDTH, HEIGHT> brightness;
+private:
 	Vector2f camPos;
 	WorldGenerator generator;
 	Vector2f GRAVITY;
