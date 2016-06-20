@@ -27,12 +27,12 @@ class Vertex;
 class RenderWindow;
 }
 
-class TextureManager
+class SFMLGraphics
 {
 public:
-	TextureManager(const sf::Vector2f &SIZE);
-	TextureManager(const TextureManager& orig);
-	virtual ~TextureManager();
+	SFMLGraphics(const sf::Vector2f &SIZE);
+	SFMLGraphics(const SFMLGraphics& orig);
+	virtual ~SFMLGraphics();
 	bool loadTexture();
 	sf::Texture &getTexture();
 	void resize(const sf::Vector2f &SIZE);

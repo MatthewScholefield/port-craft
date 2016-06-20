@@ -17,20 +17,20 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
-#include "TextureManager.hpp"
+#include "SFMLGraphics.hpp"
 
-TextureManager::TextureManager(const sf::Vector2f &SIZE) : rectangle({})
+SFMLGraphics::SFMLGraphics(const sf::Vector2f &SIZE) : rectangle({})
 {
 	resize(SIZE);
 }
 
-TextureManager::TextureManager(const TextureManager& orig) { }
+SFMLGraphics::SFMLGraphics(const SFMLGraphics& orig) { }
 
-TextureManager::~TextureManager() { }
+SFMLGraphics::~SFMLGraphics() { }
 
-bool TextureManager::loadTexture()
+bool SFMLGraphics::loadTexture()
 {
-	if (!image.loadFromFile("gfx/texture.png"))
+	if (!image.loadFromFile("gfx/blocks.png"))
 		return false;
 	image.createMaskFromColor(sf::Color(255, 0, 255));
 	texture.loadFromImage(image);
@@ -38,7 +38,7 @@ bool TextureManager::loadTexture()
 	return true;
 }
 
-void TextureManager::resize(const sf::Vector2f &SIZE)
+void SFMLGraphics::resize(const sf::Vector2f &SIZE)
 {
 	sf::Color skyColors[2] = {
 		{10, 30, 100},
@@ -55,12 +55,12 @@ void TextureManager::resize(const sf::Vector2f &SIZE)
 	rectangle = temp;
 }
 
-sf::Texture &TextureManager::getTexture()
+sf::Texture &SFMLGraphics::getTexture()
 {
 	return texture;
 }
 
-void TextureManager::drawSky(sf::RenderWindow &window)
+void SFMLGraphics::drawSky(sf::RenderWindow &window)
 {
 	std::array<sf::Vertex, 4> temp(rectangle);
 	const sf::Vector2i &pos = window.mapCoordsToPixel(sf::Vector2f(0, 0));

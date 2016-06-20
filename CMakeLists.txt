@@ -67,7 +67,7 @@ include_directories("source/")
 include_directories("source-SFML/")
 
 file(GLOB_RECURSE Foo_SOURCES "source/*.cpp" "source-SFML/*.cpp")
-file(GLOB_RECURSE Foo_HEADERS "source/*.hpp" "source-SFML/*.cpp")
+file(GLOB_RECURSE Foo_HEADERS "source/*.hpp" "source-SFML/*.hpp")
 
 set (Foo_INCLUDE_DIRS "")
 foreach (_headerFile ${Foo_HEADERS})

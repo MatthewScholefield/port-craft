@@ -4,7 +4,7 @@
 #include "World/Entities/Entity.hpp"
 #include "World/WorldRenderer.hpp" // renderer
 #include "World/World.hpp"
-#include "TextureManager.hpp"
+#include "SFMLGraphics.hpp"
 #include "EntityHandler.hpp" // world
 #include <memory>
 #include <iostream> // world
@@ -22,7 +22,7 @@ int main()
 
 	sf::Clock deltaClock;
 
-	TextureManager textureManager(view.getSize());
+	SFMLGraphics textureManager(view.getSize());
 	if (!textureManager.loadTexture())
 		return 1;
 
