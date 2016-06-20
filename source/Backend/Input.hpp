@@ -21,7 +21,7 @@
 // These 'keys' need not be actual keys on a keyboard, but could/should also be actual in game actions
 // They theoretically could be rebound to different keys depending on the actual system targeted / configuration files.
 
-enum Keys
+enum class Keys
 {
 	Left = 0,
 	Right,

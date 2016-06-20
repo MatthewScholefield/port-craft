@@ -24,13 +24,13 @@
 
 sf::Keyboard::Key getSFMLKey(Keys k)
 {
-	if (k==Left)
+	if (k==Keys::Left)
 		return sf::Keyboard::Left;
-	else if (k==Right)
+	else if (k==Keys::Right)
 		return sf::Keyboard::Right;
-	else if (k==Up)
+	else if (k==Keys::Up)
 		return sf::Keyboard::Up;
-	else if (k==Down)
+	else if (k==Keys::Down)
 		return sf::Keyboard::Down;
 
 	return sf::Keyboard::Unknown;
