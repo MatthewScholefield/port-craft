@@ -17,24 +17,10 @@
 
 #pragma once
 
-#include <vector>
-#include <array>
-
-#include "Entity.hpp"
-
-#include "Backend/Graphics/RenderWindow.hpp"
-
-class World;
-class Player;
-
-class EntityHandler
+enum class MobSpriteState
 {
-public:
-	EntityHandler();
-	
-	void update(float dt, World &world);
-	void draw(RenderWindow &window, World &world);
-	const Player &createPlayer();
-private:
-	std::array<std::vector<Entity*>, (int)EntityType::LENGTH> entityVectors;
+	NORMAL = 0,
+	HURT,
+
+	LENGTH
 };

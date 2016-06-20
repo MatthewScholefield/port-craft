@@ -17,24 +17,21 @@
 
 #pragma once
 
-#include <vector>
-#include <array>
+#include "Mob.hpp"
 
-#include "Entity.hpp"
-
-#include "Backend/Graphics/RenderWindow.hpp"
+#include "Backend/Vector.hpp"
 
 class World;
-class Player;
 
-class EntityHandler
+class Player : public Mob
 {
 public:
-	EntityHandler();
+	Player(const Vector2f &pos);
+	const MobSpriteData& getSpriteData() override;
 	
-	void update(float dt, World &world);
-	void draw(RenderWindow &window, World &world);
-	const Player &createPlayer();
+protected:
+	void updateMob(float dt, World &world) override;
+	
 private:
-	std::array<std::vector<Entity*>, (int)EntityType::LENGTH> entityVectors;
+	static MobSpriteData spriteData;
 };

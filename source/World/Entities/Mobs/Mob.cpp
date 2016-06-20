@@ -15,9 +15,40 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <cmath>
+#include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+
 #include "Mob.hpp"
 #include "Entities/Entity.hpp"
+#include "Graphics/AnimatedMobSprite.hpp"
 
-Mob::Mob(const MobType MOB_TYPE) : Entity(EntityType::MOB), MOB_TYPE(MOB_TYPE) { }
+#include "Backend/types.hpp"
+#include "Backend/Vector.hpp"
+#include "Backend/Graphics/RenderWindow.hpp"
 
-void Mob::updateEntity(float dt, World &world) { }
+sf::Texture Mob::texture;
+
+void Mob::init()
+{
+	sf::Image image;
+	image.loadFromFile("mobs.png");
+	image.createMaskFromColor(sf::Color(255,0,255),0);
+	texture.loadFromImage(image);
+}
+
+Mob::Mob(const MobType MOB_TYPE, const MobSpriteData &data, const Vector2f &pos) : Entity(EntityType::MOB, pos), MOB_TYPE(MOB_TYPE),
+sprite(data, texture), spriteState(MobSpriteState::NORMAL) { }
+
+void Mob::draw(RenderWindow &window)
+{
+	sprite.setPosition(getPixPos());
+	sprite.draw(spriteState, window);
+}
+
+void Mob::updateEntity(float dt, World &world)
+{
+	sprite.update(sf::seconds(dt));
+	sprite.setPaused(std::abs(vel.x) < EPSILON);
+	updateMob(dt, world);
+}

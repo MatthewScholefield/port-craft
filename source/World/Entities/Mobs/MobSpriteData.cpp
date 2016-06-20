@@ -15,26 +15,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include "MobSpriteData.hpp"
 
-#include <vector>
-#include <array>
+MobSpriteData::MobSpriteData(const Vector2u &START_POS, const Vector2u &SIZE,
+							 const int NUM_FRAMES) :
+SIZE(SIZE), START_POS(START_POS), NUM_FRAMES(NUM_FRAMES) { }
 
-#include "Entity.hpp"
-
-#include "Backend/Graphics/RenderWindow.hpp"
-
-class World;
-class Player;
-
-class EntityHandler
+const Vector2u &MobSpriteData::getSize() const
 {
-public:
-	EntityHandler();
-	
-	void update(float dt, World &world);
-	void draw(RenderWindow &window, World &world);
-	const Player &createPlayer();
-private:
-	std::array<std::vector<Entity*>, (int)EntityType::LENGTH> entityVectors;
-};
+	return SIZE;
+}
+
+const Vector2u &MobSpriteData::getStartPos() const
+{
+	return START_POS;
+}
+
+const int MobSpriteData::getNumFrames() const
+{
+	return NUM_FRAMES;
+}

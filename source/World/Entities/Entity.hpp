@@ -18,6 +18,7 @@
 #pragma once
 
 #include "Backend/Vector.hpp"
+#include "Backend/Graphics/RenderWindow.hpp"
 
 class World;
 
@@ -32,12 +33,17 @@ enum class EntityType
 class Entity
 {
 public:
-	Entity(const EntityType ENTITY_TYPE);
+	static void init();
+	
+	Entity(const EntityType ENTITY_TYPE, const Vector2f &pos);
 	virtual ~Entity() = default;
 	
 	void update(float dt, World &world);
+	virtual void draw(RenderWindow &window) = 0;
+	const Vector2f &getPos() const;
+	const Vector2f getPixPos() const;
 protected:
 	virtual void updateEntity(float dt, World &world) = 0;
 	const EntityType ENTITY_TYPE;
-	Vector2f pos, vel;
+	Vector2f pos, vel; // In Blocks and Blocks per Second
 };

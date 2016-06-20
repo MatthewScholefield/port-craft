@@ -19,6 +19,11 @@
 #include "Entity.hpp"
 
 Particle::Particle(const ParticleType PARTICLE_TYPE)
-: Entity(EntityType::PARTICLE), PARTICLE_TYPE(PARTICLE_TYPE) { }
+: Entity(EntityType::PARTICLE, Vector2f()), PARTICLE_TYPE(PARTICLE_TYPE) { }
+
+void Particle::draw(RenderWindow &window)
+{
+	// TODO: Implement
+}
 
 void Particle::updateEntity(float dt, World &world) { }

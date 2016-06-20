@@ -15,26 +15,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include "Player.hpp"
 
-#include <vector>
-#include <array>
+#include "Backend/Vector.hpp"
+#include "Backend/Input.hpp"
 
-#include "Entity.hpp"
+MobSpriteData Player::spriteData(Vector2u(0, 0), Vector2u(16, 32));
 
-#include "Backend/Graphics/RenderWindow.hpp"
+Player::Player(const Vector2f &pos) : Mob(MobType::PLAYER, spriteData, pos) { }
 
-class World;
-class Player;
-
-class EntityHandler
+const MobSpriteData& Player::getSpriteData()
 {
-public:
-	EntityHandler();
-	
-	void update(float dt, World &world);
-	void draw(RenderWindow &window, World &world);
-	const Player &createPlayer();
-private:
-	std::array<std::vector<Entity*>, (int)EntityType::LENGTH> entityVectors;
-};
+	return spriteData;
+}
+
+void Player::updateMob(float dt, World& world)
+{
+	const float RUN_VEL = 3.f;
+	const float JUMP_VEL = 6.f;
+
+	vel.x = 0;
+	if (isKeyPressed(Keys::Left))
+		vel.x = -RUN_VEL;
+	if (isKeyPressed(Keys::Right))
+		vel.x = +RUN_VEL;
+	if (isKeyPressed(Keys::Up))
+		vel.y = -JUMP_VEL;
+	if (isKeyPressed(Keys::Down) && vel.y < RUN_VEL)
+		vel.y = +JUMP_VEL;
+}

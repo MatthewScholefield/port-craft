@@ -19,20 +19,42 @@
 
 #include "../Entity.hpp"
 
+#include "Backend/Vector.hpp"
+#include "MobSpriteData.hpp"
+#include "Backend/Graphics/RenderWindow.hpp"
+#include "Backend/Graphics/AnimatedMobSprite.hpp"
+#include "MobSpriteState.hpp"
+
 class World;
+namespace sf
+{
+class Texture;
+}
 
 enum class MobType
 {
+	PLAYER = 0,
+	LENGTH
 };
 
 class Mob : public Entity
 {
 public:
-	Mob(const MobType MOB_TYPE);
+	static void init();
+	Mob(const MobType MOB_TYPE, const MobSpriteData &data, const Vector2f &pos);
 	virtual ~Mob() = default;
 	
+	virtual const MobSpriteData &getSpriteData() = 0;
+	void draw(RenderWindow &window) override;
+	
 protected:
-	void updateEntity(float dt, World &world);
+	void updateEntity(float dt, World &world) override;
+	virtual void updateMob(float dt, World &world) = 0;
 	
 	const MobType MOB_TYPE;
+	AnimatedMobSprite sprite;
+	MobSpriteState spriteState;
+	
+private:
+	static sf::Texture texture;
 };

@@ -18,18 +18,20 @@
 #include "Backend/Input.hpp"
 
 #include "World.hpp"
+#include "Entities/Mobs/Player.hpp"
 
 // TODO: Change arbitrary value (This is to prevent seg faults from starting left of (0,0))
 
-World::World(const Vector2f &GRAVITY) : blocks(), playerPos(500, 500), camPos(500, 500), GRAVITY(GRAVITY)
+World::World(const Vector2f &GRAVITY) :
+blocks(), brightness(), camPos(500, 500), generator(),
+GRAVITY(GRAVITY)
 {
 	generator.generate(*this);
 }
 
-void World::update(float dt)
+void World::update(float dt, const Player &player)
 {
-	updatePlayer(dt);
-	updateCamera(dt);
+	updateCamera(dt, player.getPixPos());
 }
 
 const Vector2f &World::getGravity()
@@ -37,21 +39,7 @@ const Vector2f &World::getGravity()
 	return GRAVITY;
 }
 
-void World::updatePlayer(float dt)
+void World::updateCamera(float dt, const Vector2f &pos)
 {
-	float VAL = 600.f * dt;
-
-	if (isKeyPressed(Keys::Left))
-		playerPos.x -= VAL;
-	if (isKeyPressed(Keys::Right))
-		playerPos.x += VAL;
-	if (isKeyPressed(Keys::Up))
-		playerPos.y -= VAL;
-	if (isKeyPressed(Keys::Down))
-		playerPos.y += VAL;
-}
-
-void World::updateCamera(float dt)
-{
-	camPos += (playerPos - camPos) * 2.f * dt; // TODO: Remove magic number
+	camPos += (pos - camPos) * 2.f * dt; // TODO: Remove magic number
 }
