@@ -52,6 +52,13 @@ public:
 	const Vector2f &getGravity();
 //private: TODO: Implement player on DS, and uncomment this
 	void updateCamera(float dT, const Vector2f &pos);
+	Block getBlock(Layer layer, int x, int y);
+	Block getBlock(int x, int y);
+	Block getBlock(Layer layer, const Vector2u &coord);
+	Block getBlock(const Vector2u &coord);
+	
+	Block getBlock(Layer layer, const Vector2f &coord);
+	Block getBlock(const Vector2f &coord);
 
 	//-- Variables --
 public:

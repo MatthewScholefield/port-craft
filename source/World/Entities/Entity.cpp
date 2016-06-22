@@ -38,7 +38,7 @@ const Vector2f &Entity::getPos() const
 	return pos;
 }
 
-const Vector2f Entity::getPixPos() const
+const Vector2f Entity::getPixPos(RenderWindow &window) const
 {
 	const float BLOCK_PX = 16.f;
 	return pos * BLOCK_PX;

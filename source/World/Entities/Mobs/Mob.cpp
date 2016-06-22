@@ -26,6 +26,7 @@
 #include "Backend/types.hpp"
 #include "Backend/Vector.hpp"
 #include "Backend/Graphics/RenderWindow.hpp"
+#include "World.hpp"
 
 sf::Texture Mob::texture;
 
@@ -33,16 +34,19 @@ void Mob::init()
 {
 	sf::Image image;
 	image.loadFromFile("mobs.png");
-	image.createMaskFromColor(sf::Color(255,0,255),0);
+	image.createMaskFromColor(sf::Color(255, 0, 255), 0);
 	texture.loadFromImage(image);
 }
 
-Mob::Mob(const MobType MOB_TYPE, const MobSpriteData &data, const Vector2f &pos) : Entity(EntityType::MOB, pos), MOB_TYPE(MOB_TYPE),
-sprite(data, texture), spriteState(MobSpriteState::NORMAL) { }
+Mob::Mob(const MobType MOB_TYPE, const MobSpriteData &data, const Vector2f &pos) :
+Entity(EntityType::MOB, pos), MOB_TYPE(MOB_TYPE), sprite(data, texture),
+spriteState(MobSpriteState::NORMAL) { }
 
 void Mob::draw(RenderWindow &window)
 {
-	sprite.setPosition(getPixPos());
+	Vector2f pixPos = getPixPos(window); // TODO: Change World::BLOCK_PIX * window.getScale() or something
+	pixPos -= ((Vector2f)getSpriteData().getSize() - 16.f * getSize()) / 2.f;
+	sprite.setPosition(pixPos);
 	sprite.draw(spriteState, window);
 }
 
@@ -51,4 +55,19 @@ void Mob::updateEntity(float dt, World &world)
 	sprite.update(sf::seconds(dt));
 	sprite.setPaused(std::abs(vel.x) < EPSILON);
 	updateMob(dt, world);
+	updatePhysics(dt, world);
+}
+
+void Mob::updatePhysics(float dt, World &world)
+{
+	Vector2f bottomRight = (pos + ((Vector2f)getSize()));
+	if (!world.getBlock(bottomRight.x - getSize().x / 2, bottomRight.y).isWalkThrough())
+	{
+		float val;
+		float depthTop = std::modf(bottomRight.y, &val);
+		pos.y -= depthTop;
+		if (vel.y > 0)
+			vel.y = 0;
+	}
+
 }

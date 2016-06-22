@@ -18,7 +18,7 @@ int main()
 	window.setFramerateLimit(60); //TODO: Create option for vsync (for me it causes excessive screen tearing)
 	sf::View view(window.getDefaultView());
 
-	float zoomFactor = 1;
+	float zoomFactor = 1.f;
 	view.zoom(zoomFactor);
 
 	sf::Clock deltaClock;
@@ -54,7 +54,7 @@ int main()
 
 		window.setView(view);
 		//world->update(dt, player);
-		world->updateCamera(dt,player.getPixPos());
+		world->updateCamera(dt,player.getPixPos(window));
 		
 		renderer.update(view);
 		renderer.update(window);

@@ -44,6 +44,7 @@ public:
 	Mob(const MobType MOB_TYPE, const MobSpriteData &data, const Vector2f &pos);
 	virtual ~Mob() = default;
 	
+	virtual const Vector2f &getSize() = 0; // In block units
 	virtual const MobSpriteData &getSpriteData() = 0;
 	void draw(RenderWindow &window) override;
 	
@@ -51,10 +52,13 @@ protected:
 	void updateEntity(float dt, World &world) override;
 	virtual void updateMob(float dt, World &world) = 0;
 	
+	Vector2u size;
 	const MobType MOB_TYPE;
 	AnimatedMobSprite sprite;
 	MobSpriteState spriteState;
 	
 private:
 	static sf::Texture texture;
+	
+	void updatePhysics(float dt, World &world);
 };

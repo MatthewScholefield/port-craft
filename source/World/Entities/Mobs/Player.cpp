@@ -20,11 +20,18 @@
 #include "Backend/Vector.hpp"
 #include "Backend/Input.hpp"
 
+
 MobSpriteData Player::spriteData(Vector2u(0, 0), Vector2u(16, 32));
+Vector2f Player::size(6.f/16.f, 2.f);
 
 Player::Player(const Vector2f &pos) : Mob(MobType::PLAYER, spriteData, pos) { }
 
-const MobSpriteData& Player::getSpriteData()
+const Vector2f &Player::getSize()
+{
+	return size;
+}
+
+const MobSpriteData &Player::getSpriteData()
 {
 	return spriteData;
 }

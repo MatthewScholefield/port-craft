@@ -42,3 +42,33 @@ void World::updateCamera(float dt, const Vector2f &pos)
 {
 	camPos += (pos - camPos) * 2.f * dt; // TODO: Remove magic number
 }
+
+Block World::getBlock(Layer layer, int x, int y)
+{
+	return blocks[layer][x][y];
+}
+
+Block World::getBlock(int x, int y)
+{
+	return getBlock(Layer::FG, x, y);
+}
+
+Block World::getBlock(Layer layer, const Vector2u &coord)
+{
+	return getBlock(layer, coord.x, coord.y);
+}
+
+Block World::getBlock(const Vector2u &coord)
+{
+	return getBlock(Layer::FG, coord.x, coord.y);
+}
+
+Block World::getBlock(Layer layer, const Vector2f &coord)
+{
+	return getBlock(layer, coord.x, coord.y);
+}
+
+Block World::getBlock(const Vector2f &coord)
+{
+	return getBlock(Layer::FG, coord.x, coord.y);
+}
