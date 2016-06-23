@@ -45,7 +45,7 @@ spriteState(MobSpriteState::NORMAL) { }
 void Mob::draw(RenderWindow &window)
 {
 	Vector2f pixPos = getPixPos(window); // TODO: Change World::BLOCK_PIX * window.getScale() or something
-	pixPos -= ((Vector2f)getSpriteData().getSize() - 16.f * getSize()) / 2.f;
+	pixPos -= ((Vector2f) getSpriteData().getSize() - 16.f * getSize()) / 2.f;
 	sprite.setPosition(pixPos);
 	sprite.draw(spriteState, window);
 }
@@ -58,16 +58,54 @@ void Mob::updateEntity(float dt, World &world)
 	updatePhysics(dt, world);
 }
 
-void Mob::updatePhysics(float dt, World &world)
+void Mob::checkColPoint(bool right, int sign, Vector2f pt, World &world)
 {
-	Vector2f bottomRight = (pos + ((Vector2f)getSize()));
-	if (!world.getBlock(bottomRight.x - getSize().x / 2, bottomRight.y).isWalkThrough())
+	if (!world.getBlock(pt).isWalkThrough())
 	{
 		float val;
-		float depthTop = std::modf(bottomRight.y, &val);
-		pos.y -= depthTop;
-		if (vel.y > 0)
+		float depthTop = std::modf(right ? pt.x : pt.y, &val);
+		if (sign == 1)
+			depthTop = 1.f - depthTop;
+
+		if (right)
+			pos.x += sign * depthTop;
+		else
+			pos.y += sign * depthTop;
+
+		if (right)
+		{
+			if (-sign * vel.x > 0)
+				vel.x = 0;
+		}
+		else if (-sign * vel.y > 0)
 			vel.y = 0;
 	}
+}
+
+void Mob::updatePhysics(float dt, World &world)
+{
+	const Vector2f &size = (Vector2f) getSize();
+	Vector2f bottomRight = (pos + size);
+	Vector2f center = (bottomRight + pos) / 2.f;
+	for (float x = pos.x; x < 1 + bottomRight.x; ++x)
+	{
+		if (x > bottomRight.x)
+			x = bottomRight.x;
+		for (float y = pos.y; y < 1 + bottomRight.y; ++y)
+		{
+			if (y > bottomRight.y)
+				y = bottomRight.y;
+			if (abs(x - pos.x) >= EPSILON && abs(x - bottomRight.x) >= EPSILON)
+				checkColPoint(false, y > center.y ? -1 : 1, Vector2f(x, y), world);
+			else if (abs(y - pos.y) >= EPSILON && abs(y - bottomRight.y) >= EPSILON)
+				checkColPoint(true, x > center.x ? -1 : 1, Vector2f(x, y), world);
+			else
+			{
+				checkColPoint(false, y > center.y ? -1 : 1, Vector2f(x, y), world);
+				checkColPoint(true, x > center.x ? -1 : 1, Vector2f(x, y), world);
+			}
+		}
+	}
+	checkColPoint(false, -1, Vector2f((bottomRight.x + pos.x) / 2.f, bottomRight.y), world);
 
 }
