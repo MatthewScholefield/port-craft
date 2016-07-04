@@ -55,7 +55,6 @@ void Mob::updateEntity(float dt, World &world)
 	sprite.update(sf::seconds(dt));
 	sprite.setPaused(std::abs(vel.x) < EPSILON);
 	updateMob(dt, world);
-	updatePhysics(dt, world);
 }
 
 void Mob::checkColPoint(bool right, int sign, Vector2f pt, World &world)
@@ -84,28 +83,103 @@ void Mob::checkColPoint(bool right, int sign, Vector2f pt, World &world)
 
 void Mob::updatePhysics(float dt, World &world)
 {
+	Entity::update(dt, world);
+	
 	const Vector2f &size = (Vector2f) getSize();
-	Vector2f bottomRight = (pos + size);
-	Vector2f center = (bottomRight + pos) / 2.f;
-	for (float x = pos.x; x < 1 + bottomRight.x; ++x)
+	float left = pos.x;
+	float top = pos.y;
+	float right = left + size.x;
+	float bottom = top + size.y;
+	float center = (top + bottom) / 2.f;
+	
+	bool stuckBottomLeft = !world.getBlock(left, bottom).isWalkThrough();
+	bool stuckBottomRight = !world.getBlock(right, bottom).isWalkThrough();
+	bool stuckCenterLeft = !world.getBlock(left, center).isWalkThrough();
+	bool stuckCenterRight = !world.getBlock(right, center).isWalkThrough();
+	bool stuckTopLeft = !world.getBlock(left, top).isWalkThrough();
+	bool stuckTopRight = !world.getBlock(right, top).isWalkThrough();
+	
+	float inRight = right - (int)right;
+	float inLeft = 1.0 - (left - (int)left);
+	
+	float inBottom = bottom - (int)bottom;
+	float inTop = 1.0 - (top - (int)top);
+	
+	
+	if (stuckCenterLeft)
 	{
-		if (x > bottomRight.x)
-			x = bottomRight.x;
-		for (float y = pos.y; y < 1 + bottomRight.y; ++y)
+		pos.x += inLeft;
+		vel.x = 0;
+		inLeft = 0;
+	}
+	else if (stuckCenterRight)
+	{
+		pos.x -= inRight;
+		vel.x = 0;
+		inRight = 0;
+	}
+	
+	if (stuckBottomLeft && stuckBottomRight)
+	{
+		pos.y -= inBottom;
+		vel.y = 0;
+	}
+	else if (stuckBottomLeft)
+	{
+		if (inBottom < inLeft && !stuckTopLeft)
 		{
-			if (y > bottomRight.y)
-				y = bottomRight.y;
-			if (abs(x - pos.x) >= EPSILON && abs(x - bottomRight.x) >= EPSILON)
-				checkColPoint(false, y > center.y ? -1 : 1, Vector2f(x, y), world);
-			else if (abs(y - pos.y) >= EPSILON && abs(y - bottomRight.y) >= EPSILON)
-				checkColPoint(true, x > center.x ? -1 : 1, Vector2f(x, y), world);
-			else
-			{
-				checkColPoint(false, y > center.y ? -1 : 1, Vector2f(x, y), world);
-				checkColPoint(true, x > center.x ? -1 : 1, Vector2f(x, y), world);
-			}
+			pos.y -= inBottom;
+			vel.y = 0;
+		}
+		else
+		{
+			pos.x += inLeft;
+			vel.x = 0;
 		}
 	}
-	checkColPoint(false, -1, Vector2f((bottomRight.x + pos.x) / 2.f, bottomRight.y), world);
-
+	else if (stuckBottomRight)
+	{
+		if (inBottom < inRight && !stuckTopRight)
+		{
+			pos.y -= inBottom;
+			vel.y = 0;
+		}
+		else
+		{
+			pos.x -= inRight;
+			vel.x = 0;
+		}
+	}
+	
+	if (stuckTopLeft && stuckTopRight)
+	{
+		pos.y += inTop;
+		vel.y = 0;
+	}
+	else if (stuckTopLeft)
+	{
+		if (inTop < inLeft && !stuckBottomLeft)
+		{
+			pos.y += inTop;
+			vel.y = 0;
+		}
+		else
+		{
+			pos.x += inLeft;
+			vel.x = 0;
+		}
+	}
+	else if (stuckTopRight)
+	{
+		if (inTop < inRight && !stuckBottomRight)
+		{
+			pos.y += inTop;
+			vel.y = 0;
+		}
+		else
+		{
+			pos.x -= inRight;
+			vel.x = 0;
+		}
+	}
 }

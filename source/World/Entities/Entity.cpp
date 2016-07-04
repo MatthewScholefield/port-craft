@@ -28,9 +28,14 @@ Entity::Entity(const EntityType ENTITY_TYPE, const Vector2f &pos) : ENTITY_TYPE(
 // 0 block/s -> 1 block/s in 1 s == 0 
 void Entity::update(float dt, World& world)
 {
+	updatePhysics(dt, world);
+	updateEntity(dt, world);
+}
+
+void Entity::updatePhysics(float dt, World &world)
+{
 	vel += world.getGravity() * dt;
 	pos += vel * dt;
-	updateEntity(dt, world);
 }
 
 const Vector2f &Entity::getPos() const

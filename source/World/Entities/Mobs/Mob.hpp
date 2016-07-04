@@ -62,5 +62,5 @@ private:
 	
 	void checkColPoint(bool facingRight, int sign, Vector2f pt, World &world);
 	
-	void updatePhysics(float dt, World &world);
+	void updatePhysics(float dt, World &world) override;
 };

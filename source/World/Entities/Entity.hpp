@@ -43,7 +43,9 @@ public:
 	const Vector2f &getPos() const;
 	const Vector2f getPixPos(RenderWindow &window) const;
 protected:
-	virtual void updateEntity(float dt, World &world) = 0;
 	const EntityType ENTITY_TYPE;
 	Vector2f pos, vel; // In Blocks and Blocks per Second
+private:
+	virtual void updateEntity(float dt, World &world) = 0;
+	virtual void updatePhysics(float dt, World &world);
 };
