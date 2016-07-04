@@ -47,9 +47,9 @@ void SFMLGraphics::resize(const sf::Vector2f &SIZE)
 	std::array<sf::Vertex, 4> temp = {
 		{
 			{sf::Vector2f(0, 0), skyColors[0]},
-			{sf::Vector2f(SIZE.x, 0), skyColors[0]},
-			{sf::Vector2f(SIZE.x, SIZE.y), skyColors[1]},
-			{sf::Vector2f(0, SIZE.y), skyColors[1]}
+			{sf::Vector2f(SIZE.x + 1, 0), skyColors[0]},
+			{sf::Vector2f(SIZE.x + 1, SIZE.y + 1), skyColors[1]},
+			{sf::Vector2f(0, SIZE.y + 1), skyColors[1]}
 		}
 	};
 	rectangle = temp;
@@ -63,8 +63,11 @@ sf::Texture &SFMLGraphics::getTexture()
 void SFMLGraphics::drawSky(sf::RenderWindow &window)
 {
 	std::array<sf::Vertex, 4> temp(rectangle);
-	const sf::Vector2i &pos = window.mapCoordsToPixel(sf::Vector2f(0, 0));
+	const sf::Vector2f &pos = (sf::Vector2f)window.mapCoordsToPixel(sf::Vector2f(0, 0));
 	for (auto &i : temp)
-		i.position -= (sf::Vector2f)pos;
+	{
+		i.position -= pos;
+	}
+	
 	window.draw(temp.data(), 4, sf::Quads);
 }
