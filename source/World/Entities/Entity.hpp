@@ -45,7 +45,7 @@ public:
 protected:
 	const EntityType ENTITY_TYPE;
 	Vector2f pos, vel; // In Blocks and Blocks per Second
+	virtual void updatePhysics(float dt, World &world);
 private:
 	virtual void updateEntity(float dt, World &world) = 0;
-	virtual void updatePhysics(float dt, World &world);
 };

@@ -83,7 +83,7 @@ void Mob::checkColPoint(bool right, int sign, Vector2f pt, World &world)
 
 void Mob::updatePhysics(float dt, World &world)
 {
-	Entity::update(dt, world);
+	Entity::updatePhysics(dt, world);
 	
 	const Vector2f &size = (Vector2f) getSize();
 	float left = pos.x;
