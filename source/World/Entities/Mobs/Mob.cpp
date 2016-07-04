@@ -57,30 +57,6 @@ void Mob::updateEntity(float dt, World &world)
 	updateMob(dt, world);
 }
 
-void Mob::checkColPoint(bool right, int sign, Vector2f pt, World &world)
-{
-	if (!world.getBlock(pt).isWalkThrough())
-	{
-		float val;
-		float depthTop = std::modf(right ? pt.x : pt.y, &val);
-		if (sign == 1)
-			depthTop = 1.f - depthTop;
-
-		if (right)
-			pos.x += sign * depthTop;
-		else
-			pos.y += sign * depthTop;
-
-		if (right)
-		{
-			if (-sign * vel.x > 0)
-				vel.x = 0;
-		}
-		else if (-sign * vel.y > 0)
-			vel.y = 0;
-	}
-}
-
 void Mob::updatePhysics(float dt, World &world)
 {
 	Entity::updatePhysics(dt, world);
