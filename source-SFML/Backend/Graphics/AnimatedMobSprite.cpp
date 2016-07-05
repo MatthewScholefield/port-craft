@@ -63,7 +63,7 @@ void AnimatedMobSprite::update(sf::Time dt)
 	spritePlayer.update(dt);
 }
 
-void AnimatedMobSprite::draw(MobSpriteState state, sf::RenderWindow &window)
+void AnimatedMobSprite::draw(MobSpriteState state, RenderWindow &window)
 {
 	if (prevState != state)
 	{

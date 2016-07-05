@@ -18,7 +18,7 @@
 #pragma once
 
 #include <array>
-
+#include "RenderWindow.hpp"
 #include "World/Entities/Mobs/MobSpriteState.hpp"
 #include "AnimatedSpritePlayer.hpp"
 #include "../Vector.hpp"
@@ -41,7 +41,7 @@ public:
 	void setPosition(float x, float y);
 	void setPosition(Vector2f pos);
 	void update(sf::Time dt);
-	void draw(MobSpriteState state, sf::RenderWindow &window);
+	void draw(MobSpriteState state, RenderWindow &window);
 	
 private:
 	MobSpriteState prevState;

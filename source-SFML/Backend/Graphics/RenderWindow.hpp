@@ -19,4 +19,38 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-using RenderWindow = sf::RenderWindow;
+#include "../Vector.hpp"
+
+class WorldRenderer;
+class SFMLGraphics;
+namespace sf
+{
+class Drawable;
+class RenderStates;
+class Vertex;
+enum PrimitiveType;
+}
+
+class RenderWindow
+{
+public:
+	RenderWindow();
+	void updateInternal(SFMLGraphics &textureManager);
+	Vector2f getSize();
+	float getScale();
+	bool isOpen();
+	void clear();
+	void display();
+	void updateRenderer(WorldRenderer &renderer);
+	void draw(const sf::Drawable& drawable, const sf::RenderStates& states = sf::RenderStates::Default);
+	void draw(const sf::Vertex* vertices, std::size_t vertexCount,
+              sf::PrimitiveType type, const sf::RenderStates& states = sf::RenderStates::Default);
+	Vector2i mapCoordsToPixel(Vector2f pos);
+
+private:
+	sf::RenderWindow window;
+	sf::View view;
+
+	Vector2f origSize;
+	float zoomFactor;
+};

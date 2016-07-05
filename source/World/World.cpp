@@ -15,6 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <SFML/Window/Window.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+
 #include "World.hpp"
 
 //#include "Entities/Mobs/Player.hpp"
@@ -38,8 +41,14 @@ const Vector2f &World::getGravity()
 	return GRAVITY;
 }
 
+const Vector2i World::coordToPix(const Vector2f &POS, RenderWindow &window) const
+{
+	return (Vector2i)(POS * (float)BLOCK_PX * window.getScale());
+}
+
 void World::updateCamera(float dt, const Vector2f &pos)
 {
+
 	camPos += (pos - camPos) * 2.f * dt; // TODO: Remove magic number
 }
 

@@ -46,7 +46,7 @@ public:
 	
 	virtual const Vector2f &getSize() = 0; // In block units
 	virtual const MobSpriteData &getSpriteData() = 0;
-	void draw(RenderWindow &window) override;
+	void draw(RenderWindow &window, World &world) override;
 	
 protected:
 	void updateEntity(float dt, World &world) override;

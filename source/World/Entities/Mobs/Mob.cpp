@@ -42,9 +42,9 @@ Mob::Mob(const MobType MOB_TYPE, const MobSpriteData &data, const Vector2f &pos)
 Entity(EntityType::MOB, pos), MOB_TYPE(MOB_TYPE), sprite(data, texture),
 spriteState(MobSpriteState::NORMAL) { }
 
-void Mob::draw(RenderWindow &window)
+void Mob::draw(RenderWindow &window, World &world)
 {
-	Vector2f pixPos = getPixPos(window); // TODO: Change World::BLOCK_PIX * window.getScale() or something
+	Vector2f pixPos = (Vector2f)world.coordToPix(pos, window); // TODO: Change World::BLOCK_PIX * window.getScale() or something
 	pixPos -= ((Vector2f) getSpriteData().getSize() - 16.f * getSize()) / 2.f;
 	sprite.setPosition(pixPos);
 	sprite.draw(spriteState, window);

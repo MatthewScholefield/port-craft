@@ -32,7 +32,7 @@ void EntityHandler::draw(RenderWindow &window, World& world)
 {
 	for (auto &vec : entityVectors)
 		for (auto &entity : vec)
-			entity->draw(window);
+			entity->draw(window, world);
 }
 
 const Player &EntityHandler::createPlayer()

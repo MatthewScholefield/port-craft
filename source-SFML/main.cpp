@@ -14,16 +14,10 @@ int main()
 {
 	Entity::init();
 	
-	sf::RenderWindow window(sf::VideoMode(640, 480), "Port Craft", sf::Style::Default);
-	window.setFramerateLimit(60); //TODO: Create option for vsync (for me it causes excessive screen tearing)
-	sf::View view(window.getDefaultView());
-
-	float zoomFactor = 1.f;
-	view.zoom(zoomFactor);
-
+	RenderWindow window;
 	sf::Clock deltaClock;
 
-	SFMLGraphics textureManager(view.getSize());
+	SFMLGraphics textureManager(window.getSize());
 	if (!textureManager.loadTexture())
 		return 1;
 
@@ -37,27 +31,10 @@ int main()
 	while (window.isOpen())
 	{
 		float dt = deltaClock.restart().asSeconds();
-		sf::Event event;
-		while (window.pollEvent(event))
-		{
-			switch (event.type)
-			{
-			case sf::Event::Closed:
-				window.close();
-				break;
-			case sf::Event::Resized:
-				view.setSize(event.size.width, event.size.height);
-				view.zoom(zoomFactor);
-				textureManager.resize(view.getSize());
-			}
-		}
-
-		window.setView(view);
-		//world->update(dt, player);
-		world->updateCamera(dt,player.getPixPos(window));
+		window.updateInternal(textureManager);
+		world->updateCamera(dt, (Vector2f)world->coordToPix(player.getPos(), window));
 		
-		renderer.update(view);
-		renderer.update(window);
+		window.updateRenderer(renderer);
 		entityHandler.update(dt, *world);
 
 		window.clear(); //Render block

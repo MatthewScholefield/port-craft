@@ -21,7 +21,7 @@
 Particle::Particle(const ParticleType PARTICLE_TYPE)
 : Entity(EntityType::PARTICLE, Vector2f()), PARTICLE_TYPE(PARTICLE_TYPE) { }
 
-void Particle::draw(RenderWindow &window)
+void Particle::draw(RenderWindow &window, World &world)
 {
 	// TODO: Implement
 }

@@ -60,7 +60,7 @@ sf::Texture &SFMLGraphics::getTexture()
 	return texture;
 }
 
-void SFMLGraphics::drawSky(sf::RenderWindow &window)
+void SFMLGraphics::drawSky(RenderWindow &window)
 {
 	std::array<sf::Vertex, 4> temp(rectangle);
 	const sf::Vector2f &pos = (sf::Vector2f)window.mapCoordsToPixel(sf::Vector2f(0, 0));

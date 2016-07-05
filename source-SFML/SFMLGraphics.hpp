@@ -18,13 +18,15 @@
 #pragma once
 
 #include <SFML/System/Vector2.hpp>
+#include <SFML/Graphics/Texture.hpp>
+
+#include "Backend/Graphics/RenderWindow.hpp"
 
 namespace sf
 {
 class Image;
 class Texture;
 class Vertex;
-class RenderWindow;
 }
 
 class SFMLGraphics
@@ -36,7 +38,7 @@ public:
 	bool loadTexture();
 	sf::Texture &getTexture();
 	void resize(const sf::Vector2f &SIZE);
-	void drawSky(sf::RenderWindow &window);
+	void drawSky(RenderWindow &window);
 private:
 	std::array<sf::Vertex, 4> rectangle;
 	sf::Image image;

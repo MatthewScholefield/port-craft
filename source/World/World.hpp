@@ -22,6 +22,7 @@
 
 #include "Backend/Vector.hpp"
 #include "Backend/types.hpp"
+#include "Backend/Graphics/RenderWindow.hpp"
 
 class Player;
 
@@ -50,6 +51,7 @@ public:
 	World(const Vector2f &GRAVITY);
 	//void update(float dT, const Player &player); TODO: Implement player on DS, and uncomment this
 	const Vector2f &getGravity();
+	const Vector2i coordToPix(const Vector2f &POS, RenderWindow &window) const;
 //private: TODO: Implement player on DS, and uncomment this
 	void updateCamera(float dT, const Vector2f &pos);
 	Block getBlock(Layer layer, int x, int y);
@@ -67,6 +69,8 @@ public:
 	Array3D<Block, NUM_LAYERS, WIDTH, HEIGHT> blocks;
 	Array2D<int, WIDTH, HEIGHT> brightness;
 private:
+	const int BLOCK_PX = 16;
+	const int BLOCK_PY = 16;
 	Vector2f camPos;
 	WorldGenerator generator;
 	Vector2f GRAVITY;

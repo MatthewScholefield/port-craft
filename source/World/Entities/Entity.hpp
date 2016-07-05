@@ -39,9 +39,8 @@ public:
 	virtual ~Entity() = default;
 	
 	void update(float dt, World &world);
-	virtual void draw(RenderWindow &window) = 0;
+	virtual void draw(RenderWindow &window, World &world) = 0;
 	const Vector2f &getPos() const;
-	const Vector2f getPixPos(RenderWindow &window) const;
 protected:
 	const EntityType ENTITY_TYPE;
 	Vector2f pos, vel; // In Blocks and Blocks per Second

@@ -31,7 +31,7 @@ public:
 	Particle(const ParticleType PARTICLE_TYPE);
 	virtual ~Particle() = default;
 
-	void draw(RenderWindow &window) override;
+	void draw(RenderWindow &window, World &world) override;
 
 protected:
 	void updateEntity(float dt, World &world) override;
