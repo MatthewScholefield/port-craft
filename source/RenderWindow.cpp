@@ -27,10 +27,15 @@
 
 RenderWindow::RenderWindow() :
 window(sf::VideoMode(640, 480), "Port Craft", sf::Style::Default),
-view(window.getDefaultView()), origSize(view.getSize()), zoomFactor(2.f)
+view(window.getDefaultView()), origSize(view.getSize()), zoomFactor(calcZoom(origSize))
 {
 	window.setFramerateLimit(60); //TODO: Create option for vsync (for me it causes excessive screen tearing)
 	view.zoom(1.f/zoomFactor);
+}
+
+float RenderWindow::calcZoom(Vector2f size)
+{
+	return size.x / 640.f;
 }
 
 void RenderWindow::updateInternal(SFMLGraphics &textureManager)
@@ -45,7 +50,8 @@ void RenderWindow::updateInternal(SFMLGraphics &textureManager)
 			break;
 		case sf::Event::Resized:
 			view.setSize(event.size.width, event.size.height);
-			view.zoom(zoomFactor);
+			zoomFactor = calcZoom(view.getSize());
+			view.zoom(1.f/zoomFactor);
 			textureManager.resize(view.getSize());
 		}
 	}

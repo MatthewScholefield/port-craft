@@ -35,6 +35,7 @@ class RenderWindow
 {
 public:
 	RenderWindow();
+	static float calcZoom(Vector2f size);
 	void updateInternal(SFMLGraphics &textureManager);
 	Vector2f getSize();
 	float getScale();
