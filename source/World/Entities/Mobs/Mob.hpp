@@ -59,6 +59,7 @@ protected:
 	
 private:
 	static sf::Texture texture;
+	bool facingLeft;
 	
 	void updatePhysics(float dt, World &world) override;
 };

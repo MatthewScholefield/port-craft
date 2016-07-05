@@ -40,6 +40,7 @@ public:
 	void setPaused(bool isPaused);
 	void setPosition(float x, float y);
 	void setPosition(Vector2f pos);
+	void setFlipped(bool flipped);
 	void update(sf::Time dt);
 	void draw(MobSpriteState state, RenderWindow &window);
 	

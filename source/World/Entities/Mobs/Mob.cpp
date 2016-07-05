@@ -40,7 +40,7 @@ void Mob::init()
 
 Mob::Mob(const MobType MOB_TYPE, const MobSpriteData &data, const Vector2f &pos) :
 Entity(EntityType::MOB, pos), MOB_TYPE(MOB_TYPE), sprite(data, texture),
-spriteState(MobSpriteState::NORMAL) { }
+spriteState(MobSpriteState::NORMAL), facingLeft(false) { }
 
 void Mob::draw(RenderWindow &window, World &world)
 {
@@ -54,6 +54,22 @@ void Mob::updateEntity(float dt, World &world)
 {
 	sprite.update(sf::seconds(dt));
 	sprite.setPaused(std::abs(vel.x) < EPSILON);
+	if (facingLeft)
+	{
+		if (vel.x > 0)
+		{
+			facingLeft = false;
+			sprite.setFlipped(false);
+		}
+	}
+	else
+	{
+		if (vel.x < 0)
+		{
+			facingLeft = true;
+			sprite.setFlipped(true);
+		}
+	}
 	updateMob(dt, world);
 }
 

@@ -58,6 +58,11 @@ void AnimatedMobSprite::setPosition(Vector2f pos)
 	spritePlayer.setPosition(pos);
 }
 
+void AnimatedMobSprite::setFlipped(bool flipped)
+{
+	spritePlayer.setScale(flipped?-1:1, 1);
+}
+
 void AnimatedMobSprite::update(sf::Time dt)
 {
 	spritePlayer.update(dt);
