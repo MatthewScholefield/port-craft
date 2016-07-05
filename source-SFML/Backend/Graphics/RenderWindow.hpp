@@ -47,6 +47,11 @@ public:
 	void draw(const sf::Vertex* vertices, std::size_t vertexCount,
               sf::PrimitiveType type, const sf::RenderStates& states = sf::RenderStates::Default);
 	Vector2i mapCoordsToPixel(Vector2f pos);
+	
+	sf::RenderWindow &getWindow()
+	{
+		return window;
+	}
 
 private:
 	sf::RenderWindow window;

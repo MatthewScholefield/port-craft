@@ -30,6 +30,7 @@ class World
 {
 	friend class WorldGenerator;
 	friend class WorldRenderer;
+	friend class MiningHandler;
 
 	//-- Types --
 public:

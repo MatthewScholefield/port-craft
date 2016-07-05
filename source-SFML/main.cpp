@@ -6,7 +6,8 @@
 #include "World/WorldRenderer.hpp" // renderer
 #include "World/World.hpp"
 #include "SFMLGraphics.hpp"
-#include "EntityHandler.hpp" // world
+#include "EntityHandler.hpp"
+#include "MiningHandler.hpp" // world
 #include <memory>
 #include <iostream> // world
 
@@ -25,6 +26,7 @@ int main()
 	WorldRenderer renderer(*world, textureManager.getTexture()); // TODO: Handle exception
 	renderer.calculateBrightness();
 	
+	MiningHandler miningHandler;
 	EntityHandler entityHandler;
 	const Player &player = entityHandler.createPlayer();
 
@@ -36,6 +38,9 @@ int main()
 		
 		window.updateRenderer(renderer);
 		entityHandler.update(dt, *world);
+		bool changedBlock = miningHandler.update(*world, window);
+		if (changedBlock)
+			renderer.refresh();
 
 		window.clear(); //Render block
 		{
