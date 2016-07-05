@@ -44,7 +44,7 @@ spriteState(MobSpriteState::NORMAL) { }
 
 void Mob::draw(RenderWindow &window, World &world)
 {
-	Vector2f pixPos = (Vector2f)world.coordToPix(pos, window); // TODO: Change World::BLOCK_PIX * window.getScale() or something
+	Vector2f pixPos = (Vector2f)world.coordToPix(pos); // TODO: Change World::BLOCK_PIX * window.getScale() or something
 	pixPos -= ((Vector2f) getSpriteData().getSize() - 16.f * getSize()) / 2.f;
 	sprite.setPosition(pixPos);
 	sprite.draw(spriteState, window);

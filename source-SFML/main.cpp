@@ -32,7 +32,7 @@ int main()
 	{
 		float dt = deltaClock.restart().asSeconds();
 		window.updateInternal(textureManager);
-		world->updateCamera(dt, (Vector2f)world->coordToPix(player.getPos(), window));
+		world->updateCamera(dt, (Vector2f)world->coordToPix(player.getPos()));
 		
 		window.updateRenderer(renderer);
 		entityHandler.update(dt, *world);

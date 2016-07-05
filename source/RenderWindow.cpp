@@ -27,10 +27,10 @@
 
 RenderWindow::RenderWindow() :
 window(sf::VideoMode(640, 480), "Port Craft", sf::Style::Default),
-view(window.getDefaultView()), origSize(view.getSize()), zoomFactor(1.f)
+view(window.getDefaultView()), origSize(view.getSize()), zoomFactor(2.f)
 {
 	window.setFramerateLimit(60); //TODO: Create option for vsync (for me it causes excessive screen tearing)
-	view.zoom(zoomFactor);
+	view.zoom(1.f/zoomFactor);
 }
 
 void RenderWindow::updateInternal(SFMLGraphics &textureManager)
@@ -96,5 +96,5 @@ void RenderWindow::draw(const sf::Vertex* vertices, std::size_t vertexCount,
 
 Vector2i RenderWindow::mapCoordsToPixel(Vector2f pos)
 {
-	return window.mapCoordsToPixel(pos);
+	return (Vector2i)(((Vector2f)window.mapCoordsToPixel(pos)) / zoomFactor);
 }

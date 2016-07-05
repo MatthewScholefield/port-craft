@@ -41,9 +41,9 @@ const Vector2f &World::getGravity()
 	return GRAVITY;
 }
 
-const Vector2i World::coordToPix(const Vector2f &POS, RenderWindow &window) const
+const Vector2i World::coordToPix(const Vector2f &POS) const
 {
-	return (Vector2i)(POS * (float)BLOCK_PX * window.getScale());
+	return (Vector2i)(POS * (float)BLOCK_PX);
 }
 
 void World::updateCamera(float dt, const Vector2f &pos)
