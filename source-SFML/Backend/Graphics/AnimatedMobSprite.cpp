@@ -43,7 +43,7 @@ prevState((MobSpriteState)-1), animations({}), spritePlayer()
 void AnimatedMobSprite::setPaused(bool setPaused)
 {
 	if (setPaused)
-		spritePlayer.pause();
+		spritePlayer.stop();
 	else
 		spritePlayer.play();
 }
