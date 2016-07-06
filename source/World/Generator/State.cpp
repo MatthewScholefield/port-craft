@@ -24,9 +24,9 @@ State *State::air = new AirState(),
 
 void State::enter() { }
 
-State *State::update(float noise)
+State *State::update(float noise, float threshold)
 {
-	if (noise < 0)
+	if (noise < threshold)
 		return air;
 	else
 		return updateVirtual(noise);

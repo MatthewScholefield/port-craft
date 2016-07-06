@@ -24,15 +24,24 @@
 void WorldGenerator::generate(World &world)
 {
 	const float AIR_VAL = 0.f;
-	const int NUM_DIRT_LAYERS = 7;
+	const int NUM_DIRT_LAYERS = 7, RANGE = 50;
 	int numDirt = 0; //0 == AIR
-	float frequency = 50.0f / (float) world.WIDTH;
+	float frequency = 25.0f / (float) world.WIDTH;
 	State *state = State::air;
 	for (int x = 0; x < world.WIDTH; ++x)
 		for (int y = 0; y < world.HEIGHT; ++y)
 		{
 			float noise = SimplexNoise::noise((float) x*frequency, (float) y * frequency);
-			State *newState = state->update(noise);
+			float oNoise = SimplexNoise::noise((float) x*frequency / 6.f, (float) y * frequency / 6.f);
+			float oNoise2 = SimplexNoise::noise((float) x*frequency / 18.f, (float) y * frequency / 18.f);
+			// [-1, 1]
+			
+			float progress = (y - (float)world.HEIGHT / 2.f) / RANGE;
+			if (progress < -1.f)
+				progress = -1.f;
+			else if (progress > 1.f)
+				progress = 1.f;
+			State *newState = state->update((3.f*oNoise2 + 2.f * oNoise + noise)/6.f, -progress);
 			if (newState != state)
 			{
 				state = newState;

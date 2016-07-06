@@ -24,7 +24,7 @@ class State
 {
 public:
 	virtual void enter();
-	virtual State *update(float noise);
+	virtual State *update(float noise, float threshold);
 	virtual Block getBlock() = 0;
 
 	static State *air, *grass, *dirt, *stone;
