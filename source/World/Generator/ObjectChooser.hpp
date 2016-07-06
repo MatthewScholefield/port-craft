@@ -31,13 +31,13 @@ public:
 };
 
 template<typename K, typename... Ts>
-class NumChooser
+class ObjectChooser
 {
 private:
 	const int SUM;
 
 public:
-	NumChooser();
+	ObjectChooser();
 	const int getSum();
 	constexpr K choose(int randVal);
 	constexpr K choose();
@@ -53,4 +53,4 @@ public:
 	constexpr K find(int left, K block);
 };
 
-#include "BlockChooser.inl"
+#include "ObjectChooser.inl"

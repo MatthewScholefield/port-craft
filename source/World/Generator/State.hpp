@@ -17,7 +17,7 @@
 
 #pragma once
 
-#include "BlockChooser.hpp"
+#include "ObjectChooser.hpp"
 class Block;
 
 class State
@@ -63,7 +63,7 @@ public:
 	State *updateVirtual(float noise);
 	Block getBlock();
 private:
-	NumChooser < Block,
+	ObjectChooser < Block,
 	Entry < Block::STONE, 90 >,
 	Entry < Block::ORE_COAL, 10 >,
 	Entry < Block::ORE_IRON, 5 >,
