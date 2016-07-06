@@ -29,17 +29,16 @@ void WorldGenerator::generate(World &world)
 	for (int x = 0; x < world.WIDTH; ++x)
 		for (int y = 0; y < world.HEIGHT; ++y)
 		{
-			float noise = SimplexNoise::noise((float) x*frequency, (float) y * frequency);
-			float oNoise = SimplexNoise::noise((float) x*frequency / 6.f, (float) y * frequency / 6.f);
-			float oNoise2 = SimplexNoise::noise((float) x*frequency / 18.f, (float) y * frequency / 18.f);
-			// [-1, 1]
-			
-			float progress = (y - (float)world.HEIGHT / 2.f) / RANGE;
+			float smallNoise = SimplexNoise::noise((float) x*frequency, (float) y * frequency);
+			float medNoise = SimplexNoise::noise((float) x * frequency / 6.f, (float) y * frequency / 6.f);
+			float bigNoise = SimplexNoise::noise((float) x * frequency / 18.f, (float) y * frequency / 18.f);
+
+			float progress = (y - (float) world.HEIGHT / 2.f) / RANGE;
 			if (progress < -1.f)
 				progress = -1.f;
 			else if (progress > 1.f)
 				progress = 1.f;
-			State *newState = state->update((3.f*oNoise2 + 2.f * oNoise + noise)/6.f, -progress);
+			State *newState = state->update((3.f * bigNoise + 2.f * medNoise + smallNoise) / 6.f, -progress);
 			if (newState != state)
 			{
 				state = newState;
