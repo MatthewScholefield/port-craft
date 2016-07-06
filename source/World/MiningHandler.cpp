@@ -30,10 +30,12 @@ bool MiningHandler::update(World& world, RenderWindow &window)
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
 		Vector2i pos = sf::Mouse::getPosition(window.getWindow());
+		Vector2i posScaled = (Vector2i)((Vector2f)pos / window.getScale());
 		Vector2i origin = (Vector2i)world.camPos - (Vector2i)window.getSize() / 2;
-		Vector2i pPos = pos + origin;
+		Vector2i pPos = posScaled + origin;
+		Vector2f coord = world.pixToCoord(pPos);
 		
-		world.blocks[World::FG][pPos.x/16][pPos.y/16] = Block::AIR;
+		world.blocks[World::FG][(int)coord.x][(int)coord.y] = Block::AIR;
 		changedBlocks = true;
 	}
 	

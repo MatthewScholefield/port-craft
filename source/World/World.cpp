@@ -46,6 +46,11 @@ const Vector2i World::coordToPix(const Vector2f &POS) const
 	return (Vector2i)(POS * (float)BLOCK_PX);
 }
 
+const Vector2f World::pixToCoord(const Vector2i &POS) const
+{
+	return (Vector2f) POS / (float)BLOCK_PX;
+}
+
 void World::updateCamera(float dt, const Vector2f &pos)
 {
 
