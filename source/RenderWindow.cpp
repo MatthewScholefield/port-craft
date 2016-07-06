@@ -58,7 +58,7 @@ void RenderWindow::updateInternal(SFMLGraphics &textureManager)
 	window.setView(view);
 }
 
-Vector2f RenderWindow::getSize()
+const Vector2f &RenderWindow::getSize()
 {
 	return view.getSize();
 }
