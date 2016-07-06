@@ -23,9 +23,7 @@
 
 void WorldGenerator::generate(World &world)
 {
-	const float AIR_VAL = 0.f;
-	const int NUM_DIRT_LAYERS = 7, RANGE = 50;
-	int numDirt = 0; //0 == AIR
+	const int RANGE = 50;
 	float frequency = 25.0f / (float) world.WIDTH;
 	State *state = State::air;
 	for (int x = 0; x < world.WIDTH; ++x)
