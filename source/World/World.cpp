@@ -20,6 +20,7 @@
 
 #include "World.hpp"
 #include "WorldRenderer.hpp"
+#include "RenderWindow.hpp"
 
 //#include "Entities/Mobs/Player.hpp"
 
@@ -52,9 +53,18 @@ const Vector2f World::pixToCoord(const Vector2i &POS) const
 	return (Vector2f) POS / (float)BLOCK_PX;
 }
 
-void World::updateCamera(float dt, const Vector2f &pos)
+void World::updateCamera(float dt, const Vector2f &pos, RenderWindow &window)
 {
 	camPos += (pos - camPos) * 2.f * dt; // TODO: Remove magic number
+	const Vector2f &SIZE = window.getSize() / 2.f;
+	if (camPos.x < SIZE.x)
+		camPos.x = SIZE.x;
+	if (camPos.x > WIDTH*BLOCK_PX + SIZE.x)
+		camPos.x = WIDTH*BLOCK_PX + SIZE.x;
+	if (camPos.y < SIZE.y)
+		camPos.y = SIZE.y;
+	if (camPos.y > HEIGHT*BLOCK_PY + SIZE.y)
+		camPos.y = HEIGHT*BLOCK_PY + SIZE.y;
 }
 
 void World::checkBrightnessUpdate(WorldRenderer &renderer, RenderWindow &window)

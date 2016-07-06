@@ -55,7 +55,7 @@ public:
 	const Vector2i coordToPix(const Vector2f &POS) const;
 	const Vector2f pixToCoord(const Vector2i &POS) const;
 //private: TODO: Implement player on DS, and uncomment this
-	void updateCamera(float dT, const Vector2f &pos);
+	void updateCamera(float dT, const Vector2f &pos, RenderWindow &window);
 	void checkBrightnessUpdate(WorldRenderer &renderer, RenderWindow &window);
 	Block getBlock(Layer layer, int x, int y);
 	Block getBlock(int x, int y);
