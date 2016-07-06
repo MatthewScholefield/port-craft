@@ -26,21 +26,21 @@ template<int a, int b>
 class Entry
 {
 public:
-	static constexpr int BLOCK = a;
+	static constexpr int NUM = a;
 	static constexpr int PROB = b;
 };
 
-template<typename... Ts>
-class BlockChooser
+template<typename K, typename... Ts>
+class NumChooser
 {
 private:
 	const int SUM;
 
 public:
-	BlockChooser();
+	NumChooser();
 	const int getSum();
-	constexpr Block choose(int randVal);
-	constexpr Block choose();
+	constexpr K choose(int randVal);
+	constexpr K choose();
 
 	template < typename T, typename... Args >
 	constexpr int adder();
@@ -48,9 +48,9 @@ public:
 	constexpr int adder();
 
 	template < typename T, typename... Args >
-	constexpr Block find(int left, Block block = 0);
+	constexpr K find(int left, K block = 0);
 	template < typename... Args, typename = onlyAtEnd(Args) >
-	constexpr Block find(int left, Block block);
+	constexpr K find(int left, K block);
 };
 
 #include "BlockChooser.inl"

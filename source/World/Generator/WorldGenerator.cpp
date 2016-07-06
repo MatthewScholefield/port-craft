@@ -25,20 +25,24 @@ void WorldGenerator::generate(World &world)
 {
 	const int RANGE = 50;
 	float frequency = 25.0f / (float) world.WIDTH;
-	State *state = State::air;
 	for (int x = 0; x < world.WIDTH; ++x)
+	{
+		
+		State *state = State::air;
 		for (int y = 0; y < world.HEIGHT; ++y)
 		{
 			float smallNoise = SimplexNoise::noise((float) x*frequency, (float) y * frequency);
 			float medNoise = SimplexNoise::noise((float) x * frequency / 6.f, (float) y * frequency / 6.f);
 			float bigNoise = SimplexNoise::noise((float) x * frequency / 18.f, (float) y * frequency / 18.f);
 
-			float progress = (y - (float) world.HEIGHT / 2.f) / RANGE;
-			if (progress < -1.f)
-				progress = -1.f;
-			else if (progress > 1.f)
-				progress = 1.f;
-			State *newState = state->update((3.f * bigNoise + 2.f * medNoise + smallNoise) / 6.f, -progress);
+			float threshold = (y - (float) world.HEIGHT / 2.f) / RANGE;
+			if (threshold < -1.f)
+				threshold = -1.f;
+			else if (threshold > 1.f)
+				threshold = 1.f;
+			
+			float noiseSum = (3.f * bigNoise + 2.f * medNoise + smallNoise) / 6.f;
+			State *newState = state->update(noiseSum, -threshold);
 			if (newState != state)
 			{
 				state = newState;
@@ -46,4 +50,5 @@ void WorldGenerator::generate(World &world)
 			}
 			world.blocks[World::FG][x][y] = state->getBlock();
 		}
+	}
 }

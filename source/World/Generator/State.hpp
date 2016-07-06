@@ -63,7 +63,7 @@ public:
 	State *updateVirtual(float noise);
 	Block getBlock();
 private:
-	BlockChooser <
+	NumChooser < Block,
 	Entry < Block::STONE, 90 >,
 	Entry < Block::ORE_COAL, 10 >,
 	Entry < Block::ORE_IRON, 5 >,

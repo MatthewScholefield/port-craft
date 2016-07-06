@@ -19,51 +19,51 @@
 
 #include <random>
 
-template<typename... Ts>
-const int BlockChooser<Ts...>::getSum()
+template<typename K, typename... Ts>
+const int NumChooser<K, Ts...>::getSum()
 {
 	return SUM;
 }
 
-template<typename... Ts>
+template<typename K, typename... Ts>
 template<typename T, typename... Args>
-constexpr int BlockChooser<Ts...>::adder()
+constexpr int NumChooser<K, Ts...>::adder()
 {
 	return T::PROB + adder < Args...>();
 }
 
-template<typename... Ts>
+template<typename K, typename... Ts>
 template <typename... Args, typename>
-constexpr int BlockChooser<Ts...>::adder()
+constexpr int NumChooser<K, Ts...>::adder()
 {
 	return 0;
 }
 
-template<typename... Ts>
-BlockChooser<Ts...>::BlockChooser() : SUM(adder < Ts... >()) { }
+template<typename K, typename... Ts>
+NumChooser<K, Ts...>::NumChooser() : SUM(adder < Ts... >()) { }
 
-template<typename... Ts>
+template<typename K, typename... Ts>
 template<typename T, typename... Args>
-constexpr Block BlockChooser<Ts...>::find(int left, Block block)
+constexpr K NumChooser<K, Ts...>::find(int left, K block)
 {
-	return left < 0 ? block : find < Args... >(left - T::PROB, T::BLOCK);
+	return left < 0 ? block : find < Args... >(left - T::PROB, T::NUM);
 }
 
-template<typename... Ts>
+template<typename K, typename... Ts>
 template <typename... Args, typename>
-constexpr Block BlockChooser<Ts...>::find(int left, Block block)
+constexpr K NumChooser<K, Ts...>::find(int left, K block)
 {
 	return block;
 }
 
-template<typename... Ts>
-constexpr Block BlockChooser<Ts...>::choose(int randVal)
+template<typename K, typename... Ts>
+constexpr K NumChooser<K, Ts...>::choose(int randVal)
 {
 	return find < Ts... >(randVal);
 }
 
-template<typename... Ts>
-constexpr Block BlockChooser<Ts...>::choose()
+template<typename K, typename... Ts>
+constexpr K NumChooser<K, Ts...>::choose()
 {
 	return choose(rand() % SUM);
 }
