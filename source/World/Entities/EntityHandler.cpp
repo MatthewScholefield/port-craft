@@ -37,6 +37,6 @@ void EntityHandler::draw(RenderWindow &window, World& world)
 
 const Player &EntityHandler::createPlayer()
 {
-	entityVectors[(int)EntityType::MOB].emplace_back(new Player(Vector2f(100,100)));
+	entityVectors[(int)EntityType::MOB].emplace_back(new Player(Vector2f(10,0)));
 	return *((Player*)entityVectors[(int)EntityType::MOB].back());
 }

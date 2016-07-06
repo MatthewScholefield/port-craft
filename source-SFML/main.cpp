@@ -24,7 +24,6 @@ int main()
 
 	std::shared_ptr<World> world(new World(Vector2f(0.f, 18.f)));
 	WorldRenderer renderer(*world, textureManager.getTexture()); // TODO: Handle exception
-	renderer.calculateBrightness();
 	
 	MiningHandler miningHandler;
 	EntityHandler entityHandler;
@@ -40,7 +39,8 @@ int main()
 		entityHandler.update(dt, *world);
 		bool changedBlock = miningHandler.update(*world, window);
 		if (changedBlock)
-			renderer.refresh();
+			world->triggerBrightnessUpdate();
+		world->checkBrightnessUpdate(renderer, window);
 
 		window.clear(); //Render block
 		{

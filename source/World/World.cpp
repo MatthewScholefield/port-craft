@@ -19,14 +19,15 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "World.hpp"
+#include "WorldRenderer.hpp"
 
 //#include "Entities/Mobs/Player.hpp"
 
 // TODO: Change arbitrary value (This is to prevent seg faults from starting left of (0,0))
 
 World::World(const Vector2f &GRAVITY) :
-blocks(), brightness(), camPos(500, 500), generator(),
-GRAVITY(GRAVITY)
+blocks(), brightness(), camPos(0, 0), generator(),
+GRAVITY(GRAVITY), needsBrightnessUpdate(true)
 {
 	generator.generate(*this);
 }
@@ -53,8 +54,20 @@ const Vector2f World::pixToCoord(const Vector2i &POS) const
 
 void World::updateCamera(float dt, const Vector2f &pos)
 {
-
 	camPos += (pos - camPos) * 2.f * dt; // TODO: Remove magic number
+}
+
+void World::checkBrightnessUpdate(WorldRenderer &renderer, RenderWindow &window)
+{
+	Vector2f diff = pixToCoord((Vector2i)(camPos - lastBrightnessUpdate));
+	float estDiff = std::abs(diff.x) + std::abs(diff.y);
+	if (needsBrightnessUpdate || estDiff > WorldRenderer::UPDATE_DIST)
+	{
+		needsBrightnessUpdate = false;
+		lastBrightnessUpdate = camPos;
+		renderer.calculateBrightnessAround(camPos, window);
+		renderer.refresh();
+	}
 }
 
 Block World::getBlock(Layer layer, int x, int y)
@@ -85,4 +98,9 @@ Block World::getBlock(Layer layer, const Vector2f &coord)
 Block World::getBlock(const Vector2f &coord)
 {
 	return getBlock(Layer::FG, coord.x, coord.y);
+}
+
+void World::triggerBrightnessUpdate()
+{
+	needsBrightnessUpdate = true;
 }

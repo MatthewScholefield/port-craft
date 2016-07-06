@@ -1,5 +1,6 @@
 #include "WorldRenderer.hpp"
 #include "../Backend/types.hpp"
+#include "Backend/Graphics/RenderWindow.hpp"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <cassert>
@@ -223,30 +224,50 @@ void WorldRenderer::checkBlock(int x, int y)
 	brightnessUpdate(x, y - 1, brightness);
 }
 
-void WorldRenderer::calculateBrightness()
+void WorldRenderer::calculateBrightness(int leftBound, int rightBound, int topBound, int bottomBound)
 {
-	// TODO: Update brightness in area
-	const int MAX_SPREAD = 0; // 7
-	int leftBound = 0;
-	int rightBound = world.WIDTH - 1;
-	int topBound = 0;
-	int bottomBound = world.HEIGHT - 1;
-
-	const int MIN_X = std::max(0, leftBound - MAX_SPREAD);
-	const int MAX_X = std::min(world.WIDTH - 1, rightBound + MAX_SPREAD);
-	const int MIN_Y = std::max(0, topBound - MAX_SPREAD);
-	const int MAX_Y = std::min(world.HEIGHT - 1, bottomBound + MAX_SPREAD);
+	const int PADDING = MAX_BRIGHTNESS_SPREAD + UPDATE_LEN;
+	const int MIN_X = std::max(leftBound - PADDING, 0);
+	const int MAX_X  = std::min(rightBound + PADDING, world.WIDTH - 1);
+	const int MIN_Y = std::max(topBound - PADDING, 0);
+	const int MAX_Y = std::min(bottomBound + PADDING, world.HEIGHT - 1);
 
 	for (int x = MIN_X; x <= MAX_X; ++x)
 	{
-		for (int y = MIN_Y + 1; y <= MAX_Y; ++y)
+		bool sunLit = true;
+		for (int y = 0; y <= MAX_Y; ++y)
 		{
 			Block block = world.blocks[World::FG][x][y];
-			if (block == Block::AIR || world.blocks[World::FG][x][y - 1] == Block::AIR)
-				world.brightness[x][y] = 15;
+			if (y >= MIN_Y)
+				world.brightness[x][y] = sunLit ? 15 : 0;
+			if (sunLit)
+				if (!block.isWalkThrough())
+				{
+					if (y < MIN_Y - 1)
+						y = MIN_Y - 1;
+					sunLit = false;
+				}
 		}
 	}
 	for (int i = MIN_X; i <= MAX_X; ++i)
 		for (int j = MIN_Y; j <= MAX_Y; ++j)
 			checkBlock(i, j);
+}
+
+void WorldRenderer::calculateBrightnessAround(Vector2f pos, RenderWindow &window)
+{
+	printf("Calculating..");
+	pos = world.pixToCoord((Vector2i)pos);
+	const Vector2f &SIZE = world.pixToCoord((Vector2i)window.getSize() / 2);
+	int left = pos.x - SIZE.x;
+	int right = pos.x + SIZE.x;
+	int top = pos.y - SIZE.y;
+	int bottom = pos.y + SIZE.y;
+	
+	calculateBrightness(left, right, top, bottom);
+}
+
+void WorldRenderer::calculateAllBrightness()
+{
+	calculateBrightness(0, WORLD_WIDTH - 1, 0, WORLD_HEIGHT - 1);
 }

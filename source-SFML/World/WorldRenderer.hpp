@@ -25,6 +25,7 @@
 
 #include "World.hpp"
 
+class RenderWindow;
 namespace sf
 {
 class Color;
@@ -38,7 +39,9 @@ class View;
 
 class WorldRenderer : public sf::Drawable
 {
+	static constexpr float UPDATE_LEN = 5.f, MAX_BRIGHTNESS_SPREAD = 7;
 public:
+	static constexpr float UPDATE_DIST = UPDATE_LEN * 2.f;
 	WorldRenderer(World &world, const sf::Texture &TEXTURE, unsigned int tileSize = 16, int layers = 1);
 	~WorldRenderer(void);
 	float getTileSize() const;
@@ -49,7 +52,9 @@ public:
 	void draw(sf::RenderTarget &rt, sf::RenderStates states) const;
 	void update(sf::RenderTarget &rt);
 	void update(sf::View &view);
-	void calculateBrightness();
+	void calculateBrightness(int leftBound, int rightBound, int topBound, int bottomBound);
+	void calculateBrightnessAround(Vector2f pos, RenderWindow &window);
+	void calculateAllBrightness();
 private:
 	int width;
 	int height;

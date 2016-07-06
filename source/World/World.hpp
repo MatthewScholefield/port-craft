@@ -22,10 +22,10 @@
 
 #include "Backend/Vector.hpp"
 #include "Backend/types.hpp"
-#include "Backend/Graphics/RenderWindow.hpp"
 
 class Player;
-
+class RenderWindow;
+class WorldRenderer;
 class World
 {
 	friend class WorldGenerator;
@@ -56,6 +56,7 @@ public:
 	const Vector2f pixToCoord(const Vector2i &POS) const;
 //private: TODO: Implement player on DS, and uncomment this
 	void updateCamera(float dT, const Vector2f &pos);
+	void checkBrightnessUpdate(WorldRenderer &renderer, RenderWindow &window);
 	Block getBlock(Layer layer, int x, int y);
 	Block getBlock(int x, int y);
 	Block getBlock(Layer layer, const Vector2u &coord);
@@ -63,6 +64,7 @@ public:
 	
 	Block getBlock(Layer layer, const Vector2f &coord);
 	Block getBlock(const Vector2f &coord);
+	void triggerBrightnessUpdate();
 
 	//-- Variables --
 public:
@@ -74,6 +76,8 @@ private:
 	const int BLOCK_PX = 16;
 	const int BLOCK_PY = 16;
 	Vector2f camPos;
+	Vector2f lastBrightnessUpdate;
 	WorldGenerator generator;
 	Vector2f GRAVITY;
+	bool needsBrightnessUpdate;
 };
