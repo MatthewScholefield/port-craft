@@ -27,19 +27,16 @@ void WorldGenerator::generate(World &world)
 	float frequency = 25.0f / (float) world.WIDTH;
 	for (int x = 0; x < world.WIDTH; ++x)
 	{
+		State *state = State::air;
+		
 		float biomeNoise = SimplexNoise::noise((float) x * frequency / 3.f);
-
 		biomeNoise = 0.5 * biomeNoise + 0.5f;
 		Biome biome = biomeChooser.choose(biomeNoise * biomeChooser.getSum());
-		State *state = State::air;
 		for (int y = 0; y < world.HEIGHT; ++y)
 		{
 			float smallNoise = SimplexNoise::noise((float) x*frequency, (float) y * frequency);
 			float medNoise = SimplexNoise::noise((float) x * frequency / 6.f, (float) y * frequency / 6.f);
 			float bigNoise = SimplexNoise::noise((float) x * frequency / 18.f, (float) y * frequency / 18.f);
-
-			float bigNoiseDist = 0.5 * bigNoise + 1.f;
-			
 			
 			float threshold = (y - (float) world.HEIGHT / 2.f) / RANGE;
 			if (threshold < -1.f)
