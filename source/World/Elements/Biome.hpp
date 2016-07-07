@@ -17,20 +17,9 @@
 
 #pragma once
 
-#include "ObjectChooser.hpp"
-#include "../Elements/Biome.hpp"
-
-class World;
-
-class WorldGenerator
+enum class Biome
 {
-public:
-	void generate(World &world);
-
-private:
-	ObjectChooser<Biome,
-	Entry < (int)Biome::PLAINS, 15 >,
-	Entry < (int)Biome::SNOW, 10 >,
-	Entry < (int)Biome::JUNGLE, 0 >
-	> biomeChooser;
+	PLAINS = 0,
+	SNOW,
+	JUNGLE
 };

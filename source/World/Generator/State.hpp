@@ -18,31 +18,39 @@
 #pragma once
 
 #include "ObjectChooser.hpp"
+#include "../Elements/Biome.hpp"
 class Block;
 
 class State
 {
 public:
 	virtual void enter();
-	virtual State *update(float noise, float threshold);
+	virtual State *update(float noise, float threshold, Biome biome);
 	virtual Block getBlock() = 0;
 
-	static State *air, *grass, *dirt, *stone;
+	static State *air, *grass, *snowGrass, *dirt, *stone;
 protected:
-	virtual State *updateVirtual(float noise) = 0;
+	virtual State *updateVirtual(float noise, Biome biome) = 0;
 };
 
 class AirState : public State
 {
 public:
-	State *updateVirtual(float noise);
+	State *updateVirtual(float noise, Biome biome);
 	Block getBlock();
 };
 
 class GrassState : public State
 {
 public:
-	State *updateVirtual(float noise);
+	State *updateVirtual(float noise, Biome biome);
+	Block getBlock();
+};
+
+class SnowGrassState : public State
+{
+public:
+	State *updateVirtual(float noise, Biome biome);
 	Block getBlock();
 };
 
@@ -50,7 +58,7 @@ class DirtState : public State
 {
 public:
 	void enter();
-	State *updateVirtual(float noise);
+	State *updateVirtual(float noise, Biome biome);
 	Block getBlock();
 private:
 	int count;
@@ -60,7 +68,7 @@ private:
 class StoneState : public State
 {
 public:
-	State *updateVirtual(float noise);
+	State *updateVirtual(float noise, Biome biome);
 	Block getBlock();
 private:
 	ObjectChooser < Block,

@@ -27,7 +27,10 @@ void WorldGenerator::generate(World &world)
 	float frequency = 25.0f / (float) world.WIDTH;
 	for (int x = 0; x < world.WIDTH; ++x)
 	{
-		
+		float biomeNoise = SimplexNoise::noise((float) x * frequency / 3.f);
+
+		biomeNoise = 0.5 * biomeNoise + 0.5f;
+		Biome biome = biomeChooser.choose(biomeNoise * biomeChooser.getSum());
 		State *state = State::air;
 		for (int y = 0; y < world.HEIGHT; ++y)
 		{
@@ -35,6 +38,9 @@ void WorldGenerator::generate(World &world)
 			float medNoise = SimplexNoise::noise((float) x * frequency / 6.f, (float) y * frequency / 6.f);
 			float bigNoise = SimplexNoise::noise((float) x * frequency / 18.f, (float) y * frequency / 18.f);
 
+			float bigNoiseDist = 0.5 * bigNoise + 1.f;
+			
+			
 			float threshold = (y - (float) world.HEIGHT / 2.f) / RANGE;
 			if (threshold < -1.f)
 				threshold = -1.f;
@@ -42,7 +48,7 @@ void WorldGenerator::generate(World &world)
 				threshold = 1.f;
 			
 			float noiseSum = (3.f * bigNoise + 2.f * medNoise + smallNoise) / 6.f;
-			State *newState = state->update(noiseSum, -threshold);
+			State *newState = state->update(noiseSum, -threshold, biome);
 			if (newState != state)
 			{
 				state = newState;

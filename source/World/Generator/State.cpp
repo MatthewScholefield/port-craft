@@ -16,25 +16,27 @@
  */
 
 #include "State.hpp"
+#include "Biome.hpp"
 
 State *State::air = new AirState(),
 *State::grass = new GrassState(),
+*State::snowGrass = new SnowGrassState(),
 *State::dirt = new DirtState(),
 *State::stone = new StoneState();
 
 void State::enter() { }
 
-State *State::update(float noise, float threshold)
+State *State::update(float noise, float threshold, Biome biome)
 {
 	if (noise < threshold)
 		return air;
 	else
-		return updateVirtual(noise);
+		return updateVirtual(noise, biome);
 }
 
-State *AirState::updateVirtual(float noise)
+State *AirState::updateVirtual(float noise, Biome biome)
 {
-	return State::grass;
+	return biome == Biome::SNOW ? State::snowGrass : State::grass;
 }
 
 Block AirState::getBlock()
@@ -42,7 +44,7 @@ Block AirState::getBlock()
 	return Block::AIR;
 }
 
-State *GrassState::updateVirtual(float noise)
+State *GrassState::updateVirtual(float noise, Biome biome)
 {
 	return State::dirt;
 }
@@ -52,12 +54,22 @@ Block GrassState::getBlock()
 	return Block::GRASS;
 }
 
+State *SnowGrassState::updateVirtual(float noise, Biome biome)
+{
+	return State::dirt;
+}
+
+Block SnowGrassState::getBlock()
+{
+	return Block::GRASS_SNOW;
+}
+
 void DirtState::enter()
 {
 	count = 0;
 }
 
-State *DirtState::updateVirtual(float noise)
+State *DirtState::updateVirtual(float noise, Biome biome)
 {
 	if (++count >= NUM_DIRT)
 		return State::stone;
@@ -70,7 +82,7 @@ Block DirtState::getBlock()
 	return Block::DIRT;
 }
 
-State *StoneState::updateVirtual(float noise)
+State *StoneState::updateVirtual(float noise, Biome biome)
 {
 	return State::stone;
 }

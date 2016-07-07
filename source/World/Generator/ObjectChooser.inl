@@ -46,7 +46,7 @@ template<typename K, typename... Ts>
 template<typename T, typename... Args>
 constexpr K ObjectChooser<K, Ts...>::find(int left, K block)
 {
-	return left < 0 ? block : find < Args... >(left - T::PROB, T::NUM);
+	return left < 0 ? block : find < Args... >(left - T::PROB, (K)T::NUM);
 }
 
 template<typename K, typename... Ts>

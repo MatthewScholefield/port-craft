@@ -48,7 +48,7 @@ public:
 	constexpr int adder();
 
 	template < typename T, typename... Args >
-	constexpr K find(int left, K block = 0);
+	constexpr K find(int left, K block = (K)0);
 	template < typename... Args, typename = onlyAtEnd(Args) >
 	constexpr K find(int left, K block);
 };
