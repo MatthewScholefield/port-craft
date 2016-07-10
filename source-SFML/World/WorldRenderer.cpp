@@ -256,7 +256,6 @@ void WorldRenderer::calculateBrightness(int leftBound, int rightBound, int topBo
 
 void WorldRenderer::calculateBrightnessAround(Vector2f pos, RenderWindow &window)
 {
-	printf("Calculating..");
 	pos = world.pixToCoord((Vector2i)pos);
 	const Vector2f &SIZE = world.pixToCoord((Vector2i)window.getSize() / 2);
 	int left = pos.x - SIZE.x;
