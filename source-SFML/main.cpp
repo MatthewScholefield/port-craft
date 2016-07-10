@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 
+#include "SoundManager.hpp"
 #include "World/Entities/Mobs/Player.hpp"
 #include "World/Entities/Entity.hpp"
 #include "World/WorldRenderer.hpp" // renderer
@@ -21,6 +22,11 @@ int main()
 	SFMLGraphics textureManager(window.getSize());
 	if (!textureManager.loadTexture())
 		return 1;
+	
+	SoundManager soundManager;
+	if (!soundManager.loudSounds())
+		return 1;
+	soundManager.play();
 
 	std::shared_ptr<World> world(new World(Vector2f(0.f, 18.f)));
 	WorldRenderer renderer(*world, textureManager.getTexture()); // TODO: Handle exception
