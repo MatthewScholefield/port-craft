@@ -27,6 +27,7 @@ int main()
 	if (!soundManager.loudSounds())
 		return 1;
 	soundManager.play();
+	soundManager.playSfx(SoundType::DESTROY, SoundAudio::GRASS);
 
 	std::shared_ptr<World> world(new World(Vector2f(0.f, 18.f)));
 	WorldRenderer renderer(*world, textureManager.getTexture()); // TODO: Handle exception

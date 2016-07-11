@@ -19,18 +19,86 @@
 
 #include <SFML/Audio/SoundBuffer.hpp>
 #include <SFML/Audio/Sound.hpp>
+#include <SFML/Audio/SoundBuffer.hpp>
+#include <utility>
+#include <memory>
+#include <string>
+#include <map>
+
+class SoundManager;
+
+class SoundType
+{
+	friend SoundManager;
+public:
+	SoundType();
+	SoundType(int id);
+	SoundType &operator=(int val);
+	bool operator<(const SoundType other) const;
+	const std::string &getNameCaps();
+
+	enum
+	{
+		STEP = 0,
+		DESTROY = 1,
+		PLACE = 1,
+
+		LENGTH
+	};
+
+private:
+	int val;
+
+	static std::array<std::string, LENGTH> namesCaps;
+};
+
+class SoundAudio
+{
+	friend SoundManager;
+public:
+	SoundAudio();
+	SoundAudio(int id);
+	SoundAudio &operator=(int val);
+	bool operator<(const SoundAudio other) const;
+	const std::string &getNameCaps();
+
+	enum
+	{
+		WOOD,
+		STONE,
+		SNOW,
+		SAND,
+		LADDER,
+		GRAVEL,
+		GRASS,
+		CLOTH,
+
+		LENGTH
+	};
+
+private:
+	int val;
+
+	static std::array<std::string, LENGTH> namesCaps;
+};
 
 class SoundManager
 {
 public:
 	SoundManager();
 	~SoundManager();
-	
+
 	bool loudSounds();
 	void play();
 	void pause();
+	void playSfx(SoundType type, SoundAudio audio);
 private:
 	static constexpr const char *MUSIC_NAME = "music.ogg";
+	static constexpr const char *FOLDER = "audio/", *SFX_EXT = ".wav";
 	sf::SoundBuffer buffer;
 	sf::Sound sound;
+	sf::Sound currentSfx;
+
+	static constexpr int NUM_ALT_SOUNDS = 2;
+	std::map< std::pair< SoundType, SoundAudio >, std::array<sf::SoundBuffer, NUM_ALT_SOUNDS>> sfxs;
 };
