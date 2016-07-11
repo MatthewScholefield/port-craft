@@ -114,9 +114,6 @@ std::array<std::string, Block::LENGTH> Block::names = {
 	"Water",
 	"Water Bucket",
 	"Empty Bucket",
-	"Door",
-	"Water Bucket",
-	"Bucket"
 };
 
 // TODO: Remove debug
