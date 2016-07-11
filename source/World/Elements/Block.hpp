@@ -17,6 +17,9 @@
 
 #pragma once
 
+#include <string>
+#include <memory>
+
 class Block
 {
 public:
@@ -28,6 +31,7 @@ public:
 	Block(int id);
 	
 	bool isWalkThrough();
+	const std::string &getName();
 	
 private:
 	int id;
@@ -148,4 +152,7 @@ public:
 
 		LENGTH
 	};
+	
+private:
+	static std::array<std::string, LENGTH> names;
 };
