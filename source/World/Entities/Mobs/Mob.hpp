@@ -26,6 +26,7 @@
 #include "MobSpriteState.hpp"
 
 class World;
+class SoundManager;
 namespace sf
 {
 class Texture;
@@ -60,6 +61,10 @@ protected:
 private:
 	static sf::Texture texture;
 	bool facingLeft;
+	float sinceLastSfx;
+	
+	static constexpr float STEP_SFX_TIME = 0.2;
 	
 	void updatePhysics(float dt, World &world) override;
+	void updateSound(float dt, SoundManager &manager, World &world) override;
 };

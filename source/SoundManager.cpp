@@ -20,7 +20,7 @@
 #include "SoundManager.hpp"
 
 std::array<std::string, SoundType::LENGTH> SoundType::namesCaps = {
-	"PLACE",
+	"STEP",
 	"DIG"
 };
 
@@ -64,10 +64,79 @@ SoundAudio::SoundAudio() { }
 
 SoundAudio::SoundAudio(int id) : val(id) { }
 
+SoundAudio::SoundAudio(Block block) : val(fromBlock(block)) { }
+
 SoundAudio &SoundAudio::operator=(int val)
 {
 	this->val = val;
 	return *this;
+}
+
+int SoundAudio::fromBlock(Block block)
+{
+	switch((int)block)
+	{
+	case Block::SAND:
+		return SAND;
+		
+	case Block::GRASS_SNOW:
+		return SNOW;
+		
+	case Block::GRAVEL:
+		return GRAVEL;
+		
+	case Block::WOOL_BLACK:
+	case Block::WOOL_RED:
+	case Block::WOOL_GREEN_DARK:
+	case Block::WOOL_GREEN_LIGHT:
+	case Block::WOOL_BROWN:
+	case Block::WOOL_BLUE_DARK:
+	case Block::WOOL_PURPLE:
+	case Block::WOOL_CYAN:
+	case Block::WOOL_GRAY_DARK:
+	case Block::WOOL_GRAY_LIGHT:
+	case Block::WOOL_WHITE:
+	case Block::WOOL_PINK:
+	case Block::WOOL_YELLOW:
+	case Block::WOOL_BLUE_LIGHT:
+	case Block::WOOL_MAGENTA:
+	case Block::WOOL_ORANGE:
+		return CLOTH;
+		
+	case Block::LEAVES_JUNGLE:
+	case Block::LEAVES_OAK:
+	case Block::LEAVES_SPRUCE:
+	case Block::SAPLING_JUNGLE:
+	case Block::SAPLING_OAK:
+	case Block::SAPLING_SPRUCE:
+		return GRASS;
+		
+	case Block::LOG_OAK:
+	case Block::LOG_JUNGLE:
+	case Block::LOG_BIRCH:
+	case Block::LOG_SPRUCE:
+	case Block::PLANKS_WOOD:
+	case Block::CHEST:
+	case Block::LADDER:
+		return WOOD;
+	
+	case Block::GRASS_JUNGLE:
+	case Block::GRASS:
+	case Block::DIRT:
+	case Block::MYCELIUM:
+		return GRASS;
+	
+	case Block::STONE:
+	case Block::SANDSTONE:
+	case Block::COBBLESTONE:
+	case Block::ORE_COAL:
+	case Block::ORE_IRON:
+	case Block::ORE_GOLD:
+	case Block::ORE_DIAMOND:
+	case Block::BEDROCK:
+		return STONE;
+	}
+	return -1;
 }
 
 bool SoundAudio::operator<(const SoundAudio other) const
@@ -75,11 +144,23 @@ bool SoundAudio::operator<(const SoundAudio other) const
 	return val < other.val;
 }
 
+bool SoundAudio::exists()
+{
+	return val >= 0;
+}
+
 SoundManager::SoundManager() { }
 
 SoundManager::~SoundManager() { }
 
-void SoundManager::playSfx(SoundType type, SoundAudio audio)
+void SoundManager::playSfx(Block block, SoundType type)
+{
+	SoundAudio audio(block);
+	if (audio.exists())
+		playSfxInternal(type, audio);
+}
+
+void SoundManager::playSfxInternal(SoundType type, SoundAudio audio)
 {
 	std::pair<SoundType, SoundAudio> key = std::make_pair(type, audio);
 	std::array<sf::SoundBuffer, NUM_ALT_SOUNDS> &buffers = sfxs[key];

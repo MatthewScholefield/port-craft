@@ -26,6 +26,7 @@
 
 class World;
 class Player;
+class SoundManager;
 
 class EntityHandler
 {
@@ -33,6 +34,7 @@ public:
 	EntityHandler();
 	
 	void update(float dt, World &world);
+	void updateSound(float dt, SoundManager &manager, World &world);
 	void draw(RenderWindow &window, World &world);
 	const Player &createPlayer();
 private:

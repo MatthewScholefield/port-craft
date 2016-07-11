@@ -25,6 +25,8 @@
 #include <string>
 #include <map>
 
+#include "World/Elements/Block.hpp"
+
 class SoundManager;
 
 class SoundType
@@ -58,9 +60,11 @@ class SoundAudio
 public:
 	SoundAudio();
 	SoundAudio(int id);
+	SoundAudio(Block block);
 	SoundAudio &operator=(int val);
 	bool operator<(const SoundAudio other) const;
 	const std::string &getNameCaps();
+	bool exists();
 
 	enum
 	{
@@ -80,6 +84,8 @@ private:
 	int val;
 
 	static std::array<std::string, LENGTH> namesCaps;
+	
+	int fromBlock(Block block);
 };
 
 class SoundManager
@@ -91,7 +97,7 @@ public:
 	bool loudSounds();
 	void play();
 	void pause();
-	void playSfx(SoundType type, SoundAudio audio);
+	void playSfx(Block block, SoundType type);
 private:
 	static constexpr const char *MUSIC_NAME = "music.ogg";
 	static constexpr const char *FOLDER = "audio/", *SFX_EXT = ".wav";
@@ -101,4 +107,6 @@ private:
 
 	static constexpr int NUM_ALT_SOUNDS = 2;
 	std::map< std::pair< SoundType, SoundAudio >, std::array<sf::SoundBuffer, NUM_ALT_SOUNDS>> sfxs;
+	
+	void playSfxInternal(SoundType type, SoundAudio audio);
 };

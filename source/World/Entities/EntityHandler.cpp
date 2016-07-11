@@ -28,6 +28,13 @@ void EntityHandler::update(float dt, World& world)
 			entity->update(dt, world);
 }
 
+void EntityHandler::updateSound(float dt, SoundManager &manager, World& world)
+{
+	for (auto &vec : entityVectors)
+		for (auto &entity : vec)
+			entity->updateSound(dt, manager, world);
+}
+
 void EntityHandler::draw(RenderWindow &window, World& world)
 {
 	for (auto &vec : entityVectors)

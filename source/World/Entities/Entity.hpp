@@ -21,6 +21,7 @@
 #include "Backend/Graphics/RenderWindow.hpp"
 
 class World;
+class SoundManager;
 
 enum class EntityType
 {
@@ -40,6 +41,7 @@ public:
 	
 	void update(float dt, World &world);
 	virtual void draw(RenderWindow &window, World &world) = 0;
+	virtual void updateSound(float dt, SoundManager &manager, World &world);
 	const Vector2f &getPos() const;
 protected:
 	const EntityType ENTITY_TYPE;

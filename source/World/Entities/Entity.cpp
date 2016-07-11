@@ -38,6 +38,8 @@ void Entity::updatePhysics(float dt, World &world)
 	pos += vel * dt;
 }
 
+void Entity::updateSound(float dt, SoundManager &manager, World &world) { }
+
 const Vector2f &Entity::getPos() const
 {
 	return pos;

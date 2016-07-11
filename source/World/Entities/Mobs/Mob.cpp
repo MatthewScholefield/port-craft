@@ -26,6 +26,7 @@
 #include "Backend/types.hpp"
 #include "Backend/Vector.hpp"
 #include "Backend/Graphics/RenderWindow.hpp"
+#include "SoundManager.hpp"
 #include "World.hpp"
 
 sf::Texture Mob::texture;
@@ -40,12 +41,12 @@ void Mob::init()
 
 Mob::Mob(const MobType MOB_TYPE, const MobSpriteData &data, const Vector2f &pos) :
 Entity(EntityType::MOB, pos), MOB_TYPE(MOB_TYPE), sprite(data, texture),
-spriteState(MobSpriteState::NORMAL), facingLeft(false) { }
+spriteState(MobSpriteState::NORMAL), facingLeft(false), sinceLastSfx(0.f) { }
 
 void Mob::draw(RenderWindow &window, World &world)
 {
-	Vector2f pixPos = (Vector2f)world.coordToPix(pos); // TODO: Change World::BLOCK_PIX * window.getScale() or something
-	pixPos -= ((Vector2f) getSpriteData().getSize() - (Vector2f)world.coordToPix(getSize())) / 2.f;
+	Vector2f pixPos = (Vector2f) world.coordToPix(pos); // TODO: Change World::BLOCK_PIX * window.getScale() or something
+	pixPos -= ((Vector2f) getSpriteData().getSize() - (Vector2f) world.coordToPix(getSize())) / 2.f;
 	if (facingLeft)
 		pixPos.x += getSpriteData().getSize().x;
 	sprite.setPosition(pixPos);
@@ -78,28 +79,28 @@ void Mob::updateEntity(float dt, World &world)
 void Mob::updatePhysics(float dt, World &world)
 {
 	Entity::updatePhysics(dt, world);
-	
+
 	const Vector2f &size = (Vector2f) getSize();
 	float left = pos.x;
 	float top = pos.y;
 	float right = left + size.x;
 	float bottom = top + size.y;
 	float center = (top + bottom) / 2.f;
-	
+
 	bool stuckBottomLeft = !world.getBlock(left, bottom).isWalkThrough();
 	bool stuckBottomRight = !world.getBlock(right, bottom).isWalkThrough();
 	bool stuckCenterLeft = !world.getBlock(left, center).isWalkThrough();
 	bool stuckCenterRight = !world.getBlock(right, center).isWalkThrough();
 	bool stuckTopLeft = !world.getBlock(left, top).isWalkThrough();
 	bool stuckTopRight = !world.getBlock(right, top).isWalkThrough();
-	
-	float inRight = right - (int)right;
-	float inLeft = 1.0 - (left - (int)left);
-	
-	float inBottom = bottom - (int)bottom;
-	float inTop = 1.0 - (top - (int)top);
-	
-	
+
+	float inRight = right - (int) right;
+	float inLeft = 1.0 - (left - (int) left);
+
+	float inBottom = bottom - (int) bottom;
+	float inTop = 1.0 - (top - (int) top);
+
+
 	if (stuckCenterLeft)
 	{
 		pos.x += inLeft;
@@ -112,7 +113,7 @@ void Mob::updatePhysics(float dt, World &world)
 		vel.x = 0;
 		inRight = 0;
 	}
-	
+
 	if (stuckBottomLeft && stuckBottomRight)
 	{
 		pos.y -= inBottom;
@@ -144,7 +145,7 @@ void Mob::updatePhysics(float dt, World &world)
 			vel.x = 0;
 		}
 	}
-	
+
 	if (stuckTopLeft && stuckTopRight)
 	{
 		pos.y += inTop;
@@ -176,4 +177,22 @@ void Mob::updatePhysics(float dt, World &world)
 			vel.x = 0;
 		}
 	}
+}
+
+void Mob::updateSound(float dt, SoundManager &manager, World &world)
+{
+	if (abs(vel.x) > EPSILON)
+	{
+		sinceLastSfx += dt;
+		if (sinceLastSfx > STEP_SFX_TIME)
+		{
+			sinceLastSfx -= STEP_SFX_TIME;
+			const Vector2f &size = (Vector2f) getSize();
+			Block block = world.getBlock(pos.x + size.x/2, pos.y + size.y);
+			printf("Playing %d\n", (int)block);
+			manager.playSfx(block, SoundType::STEP);
+		}
+	}
+	else
+		sinceLastSfx = STEP_SFX_TIME;
 }

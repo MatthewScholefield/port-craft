@@ -38,8 +38,8 @@ const MobSpriteData &Player::getSpriteData()
 
 void Player::updateMob(float dt, World& world)
 {
-	const float RUN_VEL = 18.f;
-	const float JUMP_VEL = 18.f;
+	const float RUN_VEL = 3.f;
+	const float JUMP_VEL = 6.f;
 
 	vel.x = 0;
 	if (isKeyPressed(Keys::Left))
