@@ -40,6 +40,19 @@ const std::string &SoundType::getNameCaps()
 	return namesCaps[val];
 }
 
+float SoundType::getVolume()
+{
+	switch(val)
+	{
+	case STEP:
+		return 20.f;
+	case DESTROY:
+		return 50.f;
+	default:
+		return 0.f;
+	}
+}
+
 const std::string &SoundAudio::getNameCaps()
 {
 	return namesCaps[val];
@@ -166,6 +179,7 @@ void SoundManager::playSfxInternal(SoundType type, SoundAudio audio)
 	std::array<sf::SoundBuffer, NUM_ALT_SOUNDS> &buffers = sfxs[key];
 	sf::SoundBuffer &buffer = buffers[rand() % NUM_ALT_SOUNDS];
 	currentSfx.setBuffer(buffer);
+	currentSfx.setVolume(type.getVolume());
 	currentSfx.play();
 }
 

@@ -38,6 +38,7 @@ public:
 	SoundType &operator=(int val);
 	bool operator<(const SoundType other) const;
 	const std::string &getNameCaps();
+	float getVolume();
 
 	enum
 	{
