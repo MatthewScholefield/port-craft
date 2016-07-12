@@ -44,7 +44,7 @@ int main()
 		window.updateRenderer(renderer);
 		entityHandler.update(dt, *world);
 		entityHandler.updateSound(dt, soundManager, *world);
-		bool changedBlock = miningHandler.update(*world, window);
+		bool changedBlock = miningHandler.update(*world, window, soundManager);
 		if (changedBlock)
 			world->triggerBrightnessUpdate();
 		world->checkBrightnessUpdate(renderer, window);

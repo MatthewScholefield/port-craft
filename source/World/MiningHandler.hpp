@@ -19,11 +19,12 @@
 
 class World;
 class RenderWindow;
+class SoundManager;
 
 class MiningHandler
 {
 public:
 	MiningHandler();
-	bool update(World &world, RenderWindow &window);
+	bool update(World &world, RenderWindow &window, SoundManager &soundManager);
 private:
 };

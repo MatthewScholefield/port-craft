@@ -21,10 +21,11 @@
 #include "Backend/Graphics/RenderWindow.hpp"
 #include "MiningHandler.hpp"
 #include "World.hpp"
+#include "SoundManager.hpp"
 
 MiningHandler::MiningHandler() { }
 
-bool MiningHandler::update(World& world, RenderWindow &window)
+bool MiningHandler::update(World& world, RenderWindow &window, SoundManager &soundManager)
 {
 	bool changedBlocks = false;
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
@@ -35,7 +36,12 @@ bool MiningHandler::update(World& world, RenderWindow &window)
 		Vector2i pPos = posScaled + origin;
 		Vector2f coord = world.pixToCoord(pPos);
 		
-		world.blocks[World::FG][(int)coord.x][(int)coord.y] = Block::AIR;
+		Block &block = world.blocks[World::FG][(int)coord.x][(int)coord.y];
+		if (block != Block::AIR)
+		{
+			soundManager.playSfx(block, SoundType::DESTROY);
+			block = Block::AIR;
+		}
 		changedBlocks = true;
 	}
 	
