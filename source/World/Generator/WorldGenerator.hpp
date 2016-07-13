@@ -33,4 +33,6 @@ private:
 	Entry < (int)Biome::SNOW, 10 >,
 	Entry < (int)Biome::JUNGLE, 0 >
 	> biomeChooser;
+	
+	void copyToBg(World &world);
 };

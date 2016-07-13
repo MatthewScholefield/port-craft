@@ -54,4 +54,13 @@ void WorldGenerator::generate(World &world)
 			world.blocks[World::FG][x][y] = state->getBlock();
 		}
 	}
+	
+	copyToBg(world);
+}
+
+void WorldGenerator::copyToBg(World &world)
+{
+	for (int i=0; i < world.WIDTH; ++i)
+		for (int j = 0; j < world.HEIGHT; ++j)
+			world.blocks[World::BG][i][j] = world.blocks[World::FG][i][j];
 }

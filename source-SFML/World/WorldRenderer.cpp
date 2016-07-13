@@ -160,9 +160,15 @@ void WorldRenderer::refresh(int x, int y)
 	for (int i = 0; i < LAYERS; i++)
 	{
 		int brightness = world.brightness[x][y];
-		int mag = (brightness * 255) / 15;
+		float mag = (brightness * 255) / 15;
+		Block block = world.blocks[World::FG][x][y];
+		if (block == Block::AIR)
+		{
+			block = world.blocks[World::BG][x][y];
+			mag *= 0.6f;
+		}
 		sf::Color color(mag, mag, mag);
-		sf::Vector2u tile = getTile(world.blocks[World::FG][x][y]);
+		sf::Vector2u tile = getTile(block);
 		sf::IntRect src(tile.x*TILE_SIZE, tile.y*TILE_SIZE, TILE_SIZE, TILE_SIZE);
 
 		// Provider(x, y, i, color, src);
