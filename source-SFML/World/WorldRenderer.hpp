@@ -74,6 +74,6 @@ private:
 	void draw(int index, sf::FloatRect rec, sf::IntRect src, sf::Color color);
 	void refreshLocal(int left, int top, int right, int bottom);
 	bool isVisible(int x, int y);
-	void brightnessUpdate(int x, int y, int brightness);
+	void brightnessUpdate(int x, int y, float brightness);
 	void checkBlock(int x, int y);
 };

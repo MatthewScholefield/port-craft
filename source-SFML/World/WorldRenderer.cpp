@@ -159,8 +159,8 @@ void WorldRenderer::refresh(int x, int y)
 
 	for (int i = 0; i < LAYERS; i++)
 	{
-		int brightness = world.brightness[x][y];
-		float mag = (brightness * 255) / 15;
+		const float MAX_BRIGHTNESS = 255.f;
+		float mag = world.brightness[x][y] * MAX_BRIGHTNESS;
 		Block block = world.blocks[World::FG][x][y];
 		if (block == Block::AIR)
 		{
@@ -204,16 +204,18 @@ void WorldRenderer::update(sf::View &view)
 
 const int WorldRenderer::SUB_AMOUNT[16] = {1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3};
 
-void WorldRenderer::brightnessUpdate(int x, int y, int brightness)
+void WorldRenderer::brightnessUpdate(int x, int y, float brightness)
 {
 	if ((unsigned) x >= World::WIDTH || (unsigned) y >= World::HEIGHT)
 		return;
-	int before = world.brightness[x][y];
-	int after = std::max(before, brightness);
-	if (before != after)
+	float before = world.brightness[x][y];
+	float after = std::max(before, brightness);
+	const float MIN_DIFF = 1.f/256.f/2.f;
+	if (std::abs(before - after) > MIN_DIFF)
 	{
 		world.brightness[x][y] = after;
-		int give = after - (world.blocks[World::FG][x][y].isWalkThrough() ? 1 : SUB_AMOUNT[after]);
+		float mult = world.blocks[World::FG][x][y].isWalkThrough() ? 0.88f : 0.7f;
+		float give = after * mult;
 		brightnessUpdate(x + 1, y, give);
 		brightnessUpdate(x - 1, y, give);
 		brightnessUpdate(x, y + 1, give);
@@ -223,7 +225,8 @@ void WorldRenderer::brightnessUpdate(int x, int y, int brightness)
 
 void WorldRenderer::checkBlock(int x, int y)
 {
-	int brightness = world.brightness[x][y] - (world.blocks[World::FG][x][y].isWalkThrough() ? 1 : SUB_AMOUNT[world.brightness[x][y]]);
+	float mult = world.blocks[World::FG][x][y].isWalkThrough() ? 0.88f : 0.7f;
+	float brightness = world.brightness[x][y] * mult;
 	brightnessUpdate(x + 1, y, brightness);
 	brightnessUpdate(x - 1, y, brightness);
 	brightnessUpdate(x, y + 1, brightness);
@@ -245,7 +248,7 @@ void WorldRenderer::calculateBrightness(int leftBound, int rightBound, int topBo
 		{
 			Block block = world.blocks[World::FG][x][y];
 			if (y >= MIN_Y)
-				world.brightness[x][y] = sunLit ? 15 : 0;
+				world.brightness[x][y] = sunLit ? 1.f : 0.f;
 			if (sunLit)
 				if (!block.isWalkThrough())
 				{

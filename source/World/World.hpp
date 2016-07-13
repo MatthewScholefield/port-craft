@@ -71,7 +71,7 @@ public:
 	static const int NUM_LAYERS = 2;
 	static const int WIDTH = WORLD_WIDTH, HEIGHT = WORLD_HEIGHT;
 	Array3D<Block, NUM_LAYERS, WIDTH, HEIGHT> blocks;
-	Array2D<int, WIDTH, HEIGHT> brightness;
+	Array2D<float, WIDTH, HEIGHT> brightness;
 private:
 	const int BLOCK_PX = 16;
 	const int BLOCK_PY = 16;
