@@ -19,6 +19,7 @@
 
 #include <vector>
 
+#include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Vertex.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Drawable.hpp>
@@ -42,7 +43,7 @@ class WorldRenderer : public sf::Drawable
 	static constexpr float UPDATE_LEN = 5.f, MAX_BRIGHTNESS_SPREAD = 7;
 public:
 	static constexpr float UPDATE_DIST = UPDATE_LEN * 2.f;
-	WorldRenderer(World &world, const sf::Texture &TEXTURE, unsigned int tileSize = 26, int layers = 1);
+	WorldRenderer(World &world, const sf::Texture &TEXTURE, unsigned int tileSize = 16, int layers = 1);
 	~WorldRenderer(void);
 	float getTileSize() const;
 	int getLayers() const;
@@ -62,6 +63,7 @@ private:
 	const int LAYERS;
 	static const int SUB_AMOUNT[16];
 	std::vector<sf::Vertex> vertices;
+	std::vector<sf::Sprite> blockSprites;
 	sf::Vector2i offset;
 	const sf::Vector2u NUM_TILES;
 	const sf::Texture &TEXTURE;

@@ -114,3 +114,8 @@ void World::triggerBrightnessUpdate()
 {
 	needsBrightnessUpdate = true;
 }
+
+const Vector2f &World::getCamPos()
+{
+	return camPos;
+}

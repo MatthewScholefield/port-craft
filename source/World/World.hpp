@@ -65,6 +65,7 @@ public:
 	Block getBlock(Layer layer, const Vector2f &coord);
 	Block getBlock(const Vector2f &coord);
 	void triggerBrightnessUpdate();
+	const Vector2f &getCamPos();
 
 	//-- Variables --
 public:

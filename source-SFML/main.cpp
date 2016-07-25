@@ -21,7 +21,7 @@ int main()
 	RenderWindow window;
 	sf::Clock deltaClock;
 
-	SFMLGraphics textureManager((Vector2f)window.getWindow().getSize());
+	SFMLGraphics textureManager((Vector2f) window.getWindow().getSize());
 	if (!textureManager.loadTexture())
 		return 1;
 
@@ -62,6 +62,24 @@ int main()
 		{
 			textureManager.drawSky(window);
 			window.draw(renderer);
+			const Vector2f &CAM_POS = world->getCamPos();
+			for (int i = -window.getSizeUnits().x / 2; i <= window.getSizeUnits().x / 2; ++i)
+			{
+				for (int j = -window.getSizeUnits().y / 2; j <= window.getSizeUnits().y / 2; ++j)
+				{
+					const Block &BLOCK = world->getBlock(i + CAM_POS.x, j + CAM_POS.y);
+					if (BLOCK.isTransparent())
+					{
+						sf::Sprite sprite;
+						sprite.setTexture(textureManager.getTexture());
+						int x = (int) BLOCK % 16;
+						int y = (int) BLOCK / 16;
+						sprite.setTextureRect(sf::IntRect(16 * x, 16 * y, 16, 16));
+						sprite.setPosition(((int) CAM_POS.x + i) * World::BLOCK_PX, ((int) CAM_POS.y + j) * World::BLOCK_PY);
+						window.draw(sprite);
+					}
+				}
+			}
 			entityHandler.draw(window, *world);
 			hudInterface.render(spriteRenderer, window);
 		}

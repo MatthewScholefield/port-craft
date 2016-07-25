@@ -176,6 +176,33 @@ bool Block::isWalkThrough()
 	}
 }
 
+bool Block::isTransparent() const
+{
+	switch (id)
+	{
+	case TORCH:
+	case GLASS:
+	case SNOW_TOP:
+	case LADDER:
+	case MUSHROOM_BROWN:
+	case MUSHROOM_RED:
+	case SHRUB:
+	case TALL_GRASS:
+	case FLOWER_RED:
+	case FLOWER_YELLOW:
+	case SAPLING_JUNGLE:
+	case SAPLING_OAK:
+	case SAPLING_SPRUCE:
+	case CHEST:
+	case DOOR_CLOSED_BOTTOM:
+	case DOOR_CLOSED_TOP:
+		return true;
+
+	default:
+		return false;
+	}
+}
+
 const std::string &Block::getName()
 {
 	return names[id];

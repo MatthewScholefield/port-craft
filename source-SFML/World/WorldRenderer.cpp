@@ -1,6 +1,7 @@
 #include "WorldRenderer.hpp"
 #include "../Backend/types.hpp"
 #include "Backend/Graphics/RenderWindow.hpp"
+#include "SpriteRenderer.hpp"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <cassert>
@@ -162,7 +163,7 @@ void WorldRenderer::refresh(int x, int y)
 		const float MAX_BRIGHTNESS = 255.f;
 		float mag = world.brightness[x][y] * MAX_BRIGHTNESS;
 		Block block = world.blocks[World::FG][x][y];
-		if (block == Block::AIR)
+		if (block == Block::AIR || block.isTransparent())
 		{
 			block = world.blocks[World::BG][x][y];
 			mag *= 0.6f;

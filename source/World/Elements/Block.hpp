@@ -32,6 +32,7 @@ public:
 	Block(int id);
 	
 	bool isWalkThrough();
+	bool isTransparent() const;
 	const std::string &getName();
 	
 private:
