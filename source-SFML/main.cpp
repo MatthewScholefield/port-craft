@@ -21,7 +21,7 @@ int main()
 	RenderWindow window;
 	sf::Clock deltaClock;
 
-	SFMLGraphics textureManager(window.getSize());
+	SFMLGraphics textureManager((Vector2f)window.getWindow().getSize());
 	if (!textureManager.loadTexture())
 		return 1;
 
@@ -44,7 +44,7 @@ int main()
 	{
 		float dt = deltaClock.restart().asSeconds();
 		window.updateInternal(textureManager);
-		world->updateCamera(dt, (Vector2f) world->coordToPix(player.getPos()), window);
+		world->updateCamera(dt, player.getPos(), window);
 
 		window.updateRenderer(renderer);
 		entityHandler.update(dt, *world);

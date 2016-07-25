@@ -37,7 +37,8 @@ public:
 	RenderWindow();
 	static float calcZoom(Vector2f size);
 	void updateInternal(SFMLGraphics &textureManager);
-	const Vector2f &getSize();
+	Vector2f getSizeUnits();
+	Vector2f getMousePos();
 	float getScale();
 	bool isOpen();
 	void clear();

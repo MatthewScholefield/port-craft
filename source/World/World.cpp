@@ -56,20 +56,20 @@ const Vector2f World::pixToCoord(const Vector2i &POS) const
 void World::updateCamera(float dt, const Vector2f &pos, RenderWindow &window)
 {
 	camPos += (pos - camPos) * 2.f * dt; // TODO: Remove magic number
-	const Vector2f &SIZE = window.getSize() / 2.f;
-	if (camPos.x < SIZE.x)
-		camPos.x = SIZE.x;
-	if (camPos.x > WIDTH*BLOCK_PX + SIZE.x)
-		camPos.x = WIDTH*BLOCK_PX + SIZE.x;
+	const Vector2f &SIZE = window.getSizeUnits() / 2.f;
+	if (camPos.x < SIZE.x + 1.f)
+		camPos.x = SIZE.x + 1.f;
+	if (camPos.x > WIDTH + SIZE.x)
+		camPos.x = WIDTH + SIZE.x;
 	if (camPos.y < SIZE.y)
 		camPos.y = SIZE.y;
-	if (camPos.y > HEIGHT*BLOCK_PY + SIZE.y)
-		camPos.y = HEIGHT*BLOCK_PY + SIZE.y;
+	if (camPos.y > HEIGHT + SIZE.y)
+		camPos.y = HEIGHT + SIZE.y;
 }
 
 void World::checkBrightnessUpdate(WorldRenderer &renderer, RenderWindow &window)
 {
-	Vector2f diff = pixToCoord((Vector2i)(camPos - lastBrightnessUpdate));
+	Vector2f diff = camPos - lastBrightnessUpdate;
 	float estDiff = std::abs(diff.x) + std::abs(diff.y);
 	if (needsBrightnessUpdate || estDiff > WorldRenderer::UPDATE_DIST)
 	{

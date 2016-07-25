@@ -42,7 +42,7 @@ class WorldRenderer : public sf::Drawable
 	static constexpr float UPDATE_LEN = 5.f, MAX_BRIGHTNESS_SPREAD = 7;
 public:
 	static constexpr float UPDATE_DIST = UPDATE_LEN * 2.f;
-	WorldRenderer(World &world, const sf::Texture &TEXTURE, unsigned int tileSize = 16, int layers = 1);
+	WorldRenderer(World &world, const sf::Texture &TEXTURE, unsigned int tileSize = 26, int layers = 1);
 	~WorldRenderer(void);
 	float getTileSize() const;
 	int getLayers() const;

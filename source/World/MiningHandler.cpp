@@ -30,11 +30,9 @@ bool MiningHandler::update(float dt, Block selectedBlock, World& world, RenderWi
 	bool changedBlocks = false;
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
-		Vector2i pos = sf::Mouse::getPosition(window.getWindow());
-		Vector2i posScaled = (Vector2i)((Vector2f)pos / window.getScale());
-		Vector2i origin = (Vector2i)world.camPos - (Vector2i)window.getSize() / 2;
-		Vector2i pPos = posScaled + origin;
-		Vector2f coord = world.pixToCoord(pPos);
+		Vector2f pos = window.getMousePos();
+		Vector2f origin = world.camPos - window.getSizeUnits() / 2.f;
+		Vector2f coord = pos + origin;
 		Vector2u touchedCoord = (Vector2u)coord;
 		if (touchedCoord == touched)
 			timeTouched += dt;

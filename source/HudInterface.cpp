@@ -52,8 +52,7 @@ void HudInterface::update(Block &selectedBlock, RenderWindow &window)
 	{
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
-			Vector2i pos = sf::Mouse::getPosition(window.getWindow());
-			pos /= (int)(16.f * window.getScale());
+			Vector2u pos = (Vector2u)window.getMousePos();
 			Block block = pos.y * NUM_COLS + pos.x;
 			if (pos.x < NUM_COLS && block.inRange())
 				selectedBlock = block;

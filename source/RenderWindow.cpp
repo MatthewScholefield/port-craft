@@ -58,9 +58,16 @@ void RenderWindow::updateInternal(SFMLGraphics &textureManager)
 	window.setView(view);
 }
 
-const Vector2f &RenderWindow::getSize()
+Vector2f RenderWindow::getSizeUnits()
 {
-	return view.getSize();
+	return view.getSize() / ((float)World::BLOCK_PX);
+}
+
+Vector2f RenderWindow::getMousePos()
+{
+	Vector2f pos = (Vector2f)sf::Mouse::getPosition(window);
+	pos /= World::BLOCK_PX * zoomFactor;
+	return pos;
 }
 
 float RenderWindow::getScale()

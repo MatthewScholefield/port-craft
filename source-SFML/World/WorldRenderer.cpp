@@ -199,7 +199,7 @@ void WorldRenderer::update(sf::RenderTarget &rt)
 
 void WorldRenderer::update(sf::View &view)
 {
-	view.setCenter(world.camPos);
+	view.setCenter(world.camPos * (float)World::BLOCK_PX);
 }
 
 const int WorldRenderer::SUB_AMOUNT[16] = {1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3};
@@ -265,8 +265,7 @@ void WorldRenderer::calculateBrightness(int leftBound, int rightBound, int topBo
 
 void WorldRenderer::calculateBrightnessAround(Vector2f pos, RenderWindow &window)
 {
-	pos = world.pixToCoord((Vector2i)pos);
-	const Vector2f &SIZE = world.pixToCoord((Vector2i)window.getSize() / 2);
+	const Vector2f &SIZE = window.getSizeUnits() / 2.f;
 	int left = pos.x - SIZE.x;
 	int right = pos.x + SIZE.x;
 	int top = pos.y - SIZE.y;
