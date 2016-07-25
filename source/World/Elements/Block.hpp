@@ -33,6 +33,7 @@ public:
 	
 	bool isWalkThrough();
 	bool isTransparent() const;
+	float lightAmount() const;
 	const std::string &getName();
 	
 private:

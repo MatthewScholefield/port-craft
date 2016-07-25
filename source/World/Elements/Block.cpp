@@ -203,6 +203,23 @@ bool Block::isTransparent() const
 	}
 }
 
+float Block::lightAmount() const
+{
+	switch (id)
+	{
+	case TORCH:
+		return 1.f;
+	case LIGHT_PUMPKIN:
+		return 0.87f;
+	case GLOWSTONE:
+		return 1.f;
+	case FURNACE_LIT:
+		return 0.8f;
+	default:
+		return 0.f;
+	}
+}
+
 const std::string &Block::getName()
 {
 	return names[id];

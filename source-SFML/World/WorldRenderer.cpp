@@ -249,7 +249,7 @@ void WorldRenderer::calculateBrightness(int leftBound, int rightBound, int topBo
 		{
 			Block block = world.blocks[World::FG][x][y];
 			if (y >= MIN_Y)
-				world.brightness[x][y] = sunLit ? 1.f : 0.f;
+				world.brightness[x][y] = sunLit ? 1.f : block.lightAmount();
 			if (sunLit)
 				if (!block.isWalkThrough())
 				{
