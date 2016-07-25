@@ -33,16 +33,19 @@ bool MiningHandler::update(float dt, Block selectedBlock, World& world, RenderWi
 		Vector2f pos = window.getMousePos();
 		Vector2f origin = world.camPos - window.getSizeUnits() / 2.f;
 		Vector2f coord = pos + origin;
-		Vector2u touchedCoord = (Vector2u)coord;
+		Vector2u touchedCoord = (Vector2u) coord;
 		if (touchedCoord == touched)
 			timeTouched += dt;
 		else
 		{
 			timeTouched = 0.f;
 			touched = touchedCoord;
+			finished = false;
 		}
-	} else if (timeTouched > 0.f)
+	}
+	if (!finished && timeTouched > 0.f)
 	{
+		finished = true;
 		timeTouched = 0.f;
 		Block &block = world.blocks[World::FG][touched.x][touched.y];
 		if (block == Block::AIR)
@@ -57,6 +60,6 @@ bool MiningHandler::update(float dt, Block selectedBlock, World& world, RenderWi
 		}
 		changedBlocks = true;
 	}
-	
+
 	return changedBlocks;
 }

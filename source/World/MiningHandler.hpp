@@ -29,5 +29,6 @@ public:
 	bool update(float dt, Block selectedBlock, World &world, RenderWindow &window, SoundManager &soundManager);
 private:
 	Vector2u touched;
-	float timeTouched;
+	float timeTouched = 0.f;
+	bool finished = false;
 };
