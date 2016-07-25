@@ -17,17 +17,22 @@
 
 #pragma once
 
-class Block;
-class World;
-class RenderWindow;
-class SoundManager;
+#include <SFML/Graphics/Sprite.hpp>
 
-class MiningHandler
+class RenderWindow;
+class Block;
+namespace sf
+{
+class Texture;
+}
+
+class SpriteRenderer
 {
 public:
-	MiningHandler();
-	bool update(float dt, Block selectedBlock, World &world, RenderWindow &window, SoundManager &soundManager);
+	SpriteRenderer(const sf::Texture &TEXTURE);
+	void renderBlock(float x, float y, Block block, RenderWindow &window);
+
 private:
-	Vector2u touched;
-	float timeTouched;
+	const sf::Texture &TEXTURE;
+	sf::Sprite sprite;
 };

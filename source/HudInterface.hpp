@@ -18,16 +18,23 @@
 #pragma once
 
 class Block;
-class World;
+class SpriteRenderer;
 class RenderWindow;
-class SoundManager;
+namespace sf
+{
+class Window;
+}
 
-class MiningHandler
+class HudInterface
 {
 public:
-	MiningHandler();
-	bool update(float dt, Block selectedBlock, World &world, RenderWindow &window, SoundManager &soundManager);
+	HudInterface();
+	
+	bool isOpen();
+	void update(Block &selectedBlock, RenderWindow &WINDOW);
+	void render(SpriteRenderer &spriteRenderer, RenderWindow &window);
+
 private:
-	Vector2u touched;
-	float timeTouched;
+	static const int NUM_COLS = 16;
+	bool open, keyPressed;
 };

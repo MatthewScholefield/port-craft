@@ -25,7 +25,7 @@
 
 MiningHandler::MiningHandler() { }
 
-bool MiningHandler::update(World& world, RenderWindow &window, SoundManager &soundManager)
+bool MiningHandler::update(float dt, Block selectedBlock, World& world, RenderWindow &window, SoundManager &soundManager)
 {
 	bool changedBlocks = false;
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
@@ -35,9 +35,24 @@ bool MiningHandler::update(World& world, RenderWindow &window, SoundManager &sou
 		Vector2i origin = (Vector2i)world.camPos - (Vector2i)window.getSize() / 2;
 		Vector2i pPos = posScaled + origin;
 		Vector2f coord = world.pixToCoord(pPos);
-		
-		Block &block = world.blocks[World::FG][(int)coord.x][(int)coord.y];
-		if (block != Block::AIR)
+		Vector2u touchedCoord = (Vector2u)coord;
+		if (touchedCoord == touched)
+			timeTouched += dt;
+		else
+		{
+			timeTouched = 0.f;
+			touched = touchedCoord;
+		}
+	} else if (timeTouched > 0.f)
+	{
+		timeTouched = 0.f;
+		Block &block = world.blocks[World::FG][touched.x][touched.y];
+		if (block == Block::AIR)
+		{
+			soundManager.playSfx(selectedBlock, SoundType::PLACE);
+			block = selectedBlock;
+		}
+		else
 		{
 			soundManager.playSfx(block, SoundType::DESTROY);
 			block = Block::AIR;

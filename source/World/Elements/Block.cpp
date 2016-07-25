@@ -118,7 +118,7 @@ std::array<std::string, Block::LENGTH> Block::names = {
 
 // TODO: Remove debug
 
-Block::Block() : id(rand() % LENGTH / 2) { }
+Block::Block() : id(AIR) { }
 
 Block::Block(int id) : id(id) { }
 
@@ -127,10 +127,15 @@ Block::operator int() const
 	return id;
 }
 
+bool Block::inRange() const
+{
+	return id >= 0 && id < LENGTH;
+}
+
 Block &Block::operator=(int val)
 {
-	assert(val >= 0 && val < LENGTH);
 	id = val;
+	assert(inRange());
 	return *this;
 }
 

@@ -24,6 +24,7 @@ class Block
 {
 public:
 	explicit operator int() const;
+	bool inRange() const;
 	Block &operator=(int val);
 	bool operator==(Block block);
 	bool operator!=(Block block);
