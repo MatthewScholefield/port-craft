@@ -31,4 +31,5 @@ private:
 	Vector2u touched;
 	float timeTouched = 0.f;
 	bool finished = false;
+	static constexpr float ACTIVATE_TIME = 0.2f;
 };

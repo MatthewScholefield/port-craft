@@ -17,6 +17,7 @@
 
 #include <SFML/Window/Touch.hpp>
 #include <SFML/Window/Mouse.hpp>
+#include <SFML/Window/Keyboard.hpp>
 
 #include "Backend/Graphics/RenderWindow.hpp"
 #include "MiningHandler.hpp"
@@ -28,37 +29,74 @@ MiningHandler::MiningHandler() { }
 bool MiningHandler::update(float dt, Block selectedBlock, World& world, RenderWindow &window, SoundManager &soundManager)
 {
 	bool changedBlocks = false;
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	bool pressed = sf::Mouse::isButtonPressed(sf::Mouse::Left);
+	if (pressed)
 	{
 		Vector2f pos = window.getMousePos();
 		Vector2f origin = world.camPos - window.getSizeUnits() / 2.f;
 		Vector2f coord = pos + origin;
 		Vector2u touchedCoord = (Vector2u) coord;
-		if (touchedCoord == touched)
-			timeTouched += dt;
-		else
+		
+		if (timeTouched < 0.f || touchedCoord != touched)
 		{
-			timeTouched = 0.f;
+			timeTouched = dt;
 			touched = touchedCoord;
 			finished = false;
 		}
+		else
+			timeTouched += dt;
 	}
-	if (!finished && timeTouched > 0.f)
+	if (!finished && (!pressed || timeTouched > ACTIVATE_TIME))
 	{
 		finished = true;
-		timeTouched = 0.f;
-		Block &block = world.blocks[World::FG][touched.x][touched.y];
-		if (block == Block::AIR)
+		Block *block = &world.blocks[World::FG][touched.x][touched.y];
+		if (*block != Block::AIR)
 		{
-			soundManager.playSfx(selectedBlock, SoundType::PLACE);
-			block = selectedBlock;
+			printf("FrontNot\n");
+			soundManager.playSfx(*block, SoundType::DESTROY);
+			*block = Block::AIR;
 		}
 		else
 		{
-			soundManager.playSfx(block, SoundType::DESTROY);
-			block = Block::AIR;
+			printf("FrontIs\n");
+			bool bg = sf::Keyboard::isKeyPressed(sf::Keyboard::Down);
+			Block *bgBlock = &world.blocks[World::BG][touched.x][touched.y];
+			if (*bgBlock == Block::AIR)
+			{
+				printf("BackIs\n");
+				if (bg)
+				{
+					printf("Bg\n");
+					block = bgBlock;
+				}
+				*block = selectedBlock;
+				soundManager.playSfx(selectedBlock, SoundType::PLACE);
+			}
+			else
+			{
+				printf("BackNot\n");
+				if (bg || timeTouched > ACTIVATE_TIME)
+				{
+					printf("Activate\n");
+					soundManager.playSfx(*bgBlock, SoundType::DESTROY);
+					*bgBlock = Block::AIR;
+				}
+				else
+				{
+					printf("Short\n");
+					*block = selectedBlock;
+					soundManager.playSfx(selectedBlock, SoundType::PLACE);
+				}
+			}
 		}
 		changedBlocks = true;
+		timeTouched = 0.f;
+	}
+	
+	if (!pressed)
+	{
+		finished = true;
+		timeTouched = -1.f;
 	}
 
 	return changedBlocks;
