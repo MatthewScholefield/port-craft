@@ -39,6 +39,7 @@ After compiling the project, the executable should work as is and resides in the
 # Contact
 Any questions about Port Craft?
 Contact me at [matthew3311999@gmail.com](mailto://matthew3311999@gmail.com) or file an issue in the issue tracker.
+
 [sfml-linux]:http://www.sfml-dev.org/tutorials/2.3/start-linux.php
 [contact]:https://github.com/Wolfgange3311999/Port-Craft#contact
 [running-port-craft]:https://github.com/Wolfgange3311999/Port-Craft#contact
@@ -46,4 +47,4 @@ Contact me at [matthew3311999@gmail.com](mailto://matthew3311999@gmail.com) or f
 [sfml-windows]:http://www.sfml-dev.org/tutorials/2.3/#getting-started
 [cmake-windows]:https://cmake.org/download/
 [cmake-gui]:https://cmake.org/runningcmake/
-[screenshot]:https://raw.githubusercontent.com/Wolfgange3311999/Port-Craft/master/readme/Screenshot.png
+[screenshot]:https://raw.githubusercontent.com/MatthewScholefield/port-craft/master/readme/Screenshot.png
